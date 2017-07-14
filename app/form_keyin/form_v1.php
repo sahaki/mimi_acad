@@ -56,39 +56,7 @@
                                 </li>
                             </ol>
                             <!-- begin wizard step-1 -->
-                            <div>
-                                <fieldset>
-                                    <legend class="pull-left width-full">Identification</legend>
-                                    <!-- begin row -->
-                                    <div class="row">
-                                        <!-- begin col-4 -->
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label>First Name</label>
-                                                <input type="text" name="firstname" placeholder="John" class="form-control" />
-                                            </div>
-                                        </div>
-                                        <!-- end col-4 -->
-                                        <!-- begin col-4 -->
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label>Middle Initial</label>
-                                                <input type="text" name="middle" placeholder="A" class="form-control" />
-                                            </div>
-                                        </div>
-                                        <!-- end col-4 -->
-                                        <!-- begin col-4 -->
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label>Last Name</label>
-                                                <input type="text" name="lastname" placeholder="Smith" class="form-control" />
-                                            </div>
-                                        </div>
-                                        <!-- end col-4 -->
-                                    </div>
-                                    <!-- end row -->
-                                </fieldset>
-                            </div>
+                            <?php include_once ('general_tab.php'); ?>
                             <!-- end wizard step-1 -->
                             <!-- begin wizard step-2 -->
                             <div>
