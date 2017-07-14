@@ -59,72 +59,7 @@
                             <?php include_once ('general_tab.php'); ?>
                             <!-- end wizard step-1 -->
                             <!-- begin wizard step-2 -->
-                            <div>
-                                <fieldset>
-                                    <legend class="pull-left width-full">Contact Information</legend>
-                                    <!-- begin row -->
-                                    <div class="row">
-                                        <!-- begin col-6 -->
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>Phone Number</label>
-                                                <input type="text" name="phone" placeholder="123-456-7890" class="form-control" />
-                                            </div>
-                                        </div>
-                                        <!-- end col-6 -->
-                                        <!-- begin col-6 -->
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>Email Address</label>
-                                                <input type="text" name="email" placeholder="someone@example.com" class="form-control" />
-                                            </div>
-                                        </div>
-                                        <!-- end col-6 -->
-                                    </div>
-                                    <!-- end row -->
-                                </fieldset>
-                            </div>
-                            <!-- end wizard step-2 -->
-                            <!-- begin wizard step-3 -->
-                            <div>
-                                <fieldset>
-                                    <legend class="pull-left width-full">Login</legend>
-                                    <!-- begin row -->
-                                    <div class="row">
-                                        <!-- begin col-4 -->
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label>Username</label>
-                                                <div class="controls">
-                                                    <input type="text" name="username" placeholder="johnsmithy" class="form-control" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- end col-4 -->
-                                        <!-- begin col-4 -->
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label>Pasword</label>
-                                                <div class="controls">
-                                                    <input type="password" name="password" placeholder="Your password" class="form-control" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- end col-4 -->
-                                        <!-- begin col-4 -->
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label>Confirm Pasword</label>
-                                                <div class="controls">
-                                                    <input type="password" name="password2" placeholder="Confirmed password" class="form-control" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- end col-6 -->
-                                    </div>
-                                    <!-- end row -->
-                                </fieldset>
-                            </div>
+                            <?php include_once ('curator_tab.php'); ?>
                             <!-- end wizard step-3 -->
                             <!-- begin wizard step-4 -->
                             <div>
