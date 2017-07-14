@@ -15,3 +15,7 @@
 fieldset label,fieldset input{
     font-size: 14px !important;
 }
+
+.bwizard-steps li.active, .bwizard-steps li.active:focus, .bwizard-steps li.active:hover {
+    background: #f59c1a!important;
+}
