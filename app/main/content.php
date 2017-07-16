@@ -1,5 +1,5 @@
-<?php if($_GET['page'] == 'form_keyin') :
-include_once ('../form_keyin/form_v1.php');
+<?php if($_GET['page'] == 'general_form_keyin') :
+include_once('../general_form_keyin/form_v1.php');
  else: ?>
 <div id="content" class="content">
     <!-- begin breadcrumb -->
