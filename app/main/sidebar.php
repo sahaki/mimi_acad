@@ -19,7 +19,7 @@
         <ul class="nav">
             <li class="nav-header">จัดการข้อมูล</li>
             <li class="active"><a href="calendar.html"><i class="fa fa-users"></i> <span>ข้อมูลนักกีฬา</span></a></li>
-
+            <li><a href="calendar.html"><i class="fa fa-users"></i> <span>ตั้งค่า</span></a></li>
             <!-- begin sidebar minify button -->
             <li><a href="javascript:;" class="sidebar-minify-btn" data-click="sidebar-minify"><i class="fa fa-angle-double-left"></i></a></li>
             <!-- end sidebar minify button -->

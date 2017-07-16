@@ -3,9 +3,8 @@
 		<legend class="pull-left width-full form-legend">ข้อมูลทั่วไป</legend>
 		<!-- begin row -->
 		<div class="row">
-			<div class="col-md-4">
-				<img src="../../media/person_register/images.jpg"><br>
-                <input type="file" name="upload" class="btn btn-success">
+			<div class="col-md-4" style="text-align: center">
+				<img src="../../media/person_register/images.jpg">
 			</div>
 			<div class="col-md-4">
 				<div class="form-group">
@@ -53,6 +52,7 @@
 				</div>
 			</div>
 		</div>
+
 		<div class="row">
 			<div class="col-md-4">
 				<div class="form-group">
@@ -94,6 +94,22 @@
                 <div class="form-group">
                     <label>กีฬาที่ชอบ</label>
                     <input type="text" name="middle" placeholder="กีฬาที่ชอบ" class="form-control" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>โรคประจำตัว</label>
+                    <input type="text" name="middle" placeholder="โรคประจำตัว" class="form-control" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>การแพ้อาหาร</label>
+                    <input type="text" name="middle" placeholder="การแพ้อาหาร" class="form-control" />
                 </div>
             </div>
         </div>

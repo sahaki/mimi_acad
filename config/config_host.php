@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * @comment config
  * @projectCode MOE
@@ -9,8 +9,8 @@
  * @created 16/05/2014
  */
 
-define("HOST",$_SERVER[SERVER_NAME]);
+define("HOST",$_SERVER['SERVER_NAME']);
 define("USER","root");
 define("PWD","1234");
-define("DB_NAME","academe_v1");
+define("DB_NAME","academe");
 ?>
