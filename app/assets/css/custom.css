@@ -6,11 +6,7 @@
     width:auto !important;
 }
 
-.form-legend{
-    background-color: #242A30;
-    color: #FFF;
-    padding: 5px;
-}
+
 
 fieldset label,fieldset input{
     font-size: 14px !important;
