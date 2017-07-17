@@ -87,7 +87,7 @@
 
                                     <!-- Start tabs content -->
                                     <div class="panel-body">
-                                        <form action="#" class="tab-content form-horizontal">
+                                        <form action="#" class="tab-content">
                                             <div class="tab-pane fade in active inner-all" id="tab3-1">
                                                 <?php include("general_tab.php"); ?>
                                             </div>

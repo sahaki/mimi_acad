@@ -1,3 +1,21 @@
+body{
+    font-family: 'Kanit', sans-serif;
+}
+.panel2 {
+    border: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px
+}
+.panel2 .panel-body{
+    background-color: white;
+}
+
+.table-striped>tbody>tr:nth-child(odd)>td, .table-striped>tbody>tr:nth-child(odd)>th {
+    background: #f9f6f1 !important;
+}
 .sidebar .nav>li.nav-header{
     font-size: 13px !important;
 }
@@ -14,4 +32,18 @@ fieldset label,fieldset input{
 
 .bwizard-steps li.active, .bwizard-steps li.active:focus, .bwizard-steps li.active:hover {
     background: #f59c1a!important;
+}
+.box-main{
+    background-color: white;
+}
+
+#data-table thead tr td{
+    text-align: center;
+    vertical-align: middle;
+
+}
+.table-bordered thead tr td{
+    text-align: center;
+    vertical-align: middle;
+
 }
