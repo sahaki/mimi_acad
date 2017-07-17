@@ -1,6 +1,9 @@
-<?php if($_GET['page'] == 'general_form_keyin') :
-include_once('../general_form_keyin/form_v1.php');
- else: ?>
+<?php
+if($_GET['page'] == 'general_form_keyin') :
+    include_once('../general_form_keyin/form_v1.php');
+elseif($_GET['page'] == 'general_dashboard') :
+	include_once('../general_dashboard/dashboard.php');
+else: ?>
 <div id="content" class="content">
     <!-- begin breadcrumb -->
     <ol class="breadcrumb pull-right">
