@@ -4,21 +4,5 @@ if($_GET['page'] == 'general_form_keyin') :
 elseif($_GET['page'] == 'general_dashboard') :
 	include_once('../general_dashboard/dashboard.php');
 else: ?>
-<div id="content" class="content">
-    <!-- begin breadcrumb -->
-    <ol class="breadcrumb pull-right">
-        <li><a href="javascript:;">Home</a></li>
-        <li class="active">Dashboard</li>
-    </ol>
-    <!-- end breadcrumb -->
-    <!-- begin page-header -->
-    <h1 class="page-header">Dashboard <small>header small text goes here...</small></h1>
-    <!-- end page-header -->
-
-    <!-- begin row -->
-    <div class="row">
-
-    </div>
-    <!-- end row -->
-</div>
+    <META HTTP-EQUIV="Refresh" CONTENT="0;URL=login.php">
 <?php endif; ?>

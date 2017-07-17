@@ -13,10 +13,9 @@
 <script src="../assets/plugins/DataTables/js/jquery.dataTables.js"></script>
 <script src="../assets/plugins/DataTables/js/dataTables.responsive.js"></script>
 <script src="../assets/js/table-manage-responsive.demo.min.js"></script>
-<script src="../assets/js/apps.min.js"></script>
+
 <script>
 	$(document).ready(function() {
-		App.init();
 		TableManageResponsive.init();
 	});
 </script>

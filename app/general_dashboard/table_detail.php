@@ -35,7 +35,7 @@ $dataTest = array(
 <div class="panel panel-inverse">
 	<div class="panel-heading">
 		<div class="panel-heading-btn">
-			<a href="?page=general_form_keyin" class="btn btn-xs btn-icon btn-circle btn-success" ><i class="fa fa-plus"></i></a>
+			<a href="?page=general_form_keyin" class="btn btn-sm btn-icon btn-circle btn-success" ><i class="fa fa-plus"></i></a>
 		</div>
 		<h4 class="panel-title">รายชื่อนักกีฬา</h4>
 	</div>

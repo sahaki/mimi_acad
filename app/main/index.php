@@ -42,28 +42,17 @@ include_once('include_php.php');
 
             <!-- begin header navigation right -->
             <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <form class="navbar-form full-width">
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Enter keyword" />
-                            <button type="submit" class="btn btn-search"><i class="fa fa-search"></i></button>
-                        </div>
-                    </form>
-                </li>
-
                 <li class="dropdown navbar-user">
                     <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
                         <img src="../assets/img/user-13.jpg" alt="" />
-                        <span class="hidden-xs">Adam Schwartz</span> <b class="caret"></b>
+                        <span class="hidden-xs">อ้ายกล นะจ๊ะ</span> <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu animated fadeInLeft">
                         <li class="arrow"></li>
-                        <li><a href="javascript:;">Edit Profile</a></li>
-                        <li><a href="javascript:;"><span class="badge badge-danger pull-right">2</span> Inbox</a></li>
-                        <li><a href="javascript:;">Calendar</a></li>
-                        <li><a href="javascript:;">Setting</a></li>
+                        <li><a href="javascript:;">แก้ไขข้อมูลส่วนตัว</a></li>
+                        <li><a href="javascript:;">ตั้งค่าระบบ</a></li>
                         <li class="divider"></li>
-                        <li><a href="javascript:;">Log Out</a></li>
+                        <li><a href="login.php">ออกจากระบบ</a></li>
                     </ul>
                 </li>
             </ul>

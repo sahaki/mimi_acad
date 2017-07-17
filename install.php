@@ -22,7 +22,35 @@ if($result->num_rows > 0){
     $mysqli->ServiceQuery($textQuery);
     echo "==== Create Table config_position Complete ====<br>";
 }
-############### สร้างตาราง config_position  ###############
 
+############### สร้างตาราง config_blood  ###############
+$createTable = "CREATE TABLE IF NOT EXISTS `config_blood` (
+  `blood_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสกรุ๊ปเลือด',
+  `blood_label` varchar(20) DEFAULT NULL COMMENT 'กรุ๊ปเลือด',
+  PRIMARY KEY (`blood_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='ตารางเก็บกรุ๊ปเลือด' ";
 
+$mysqli->ServiceQuery($crateTable);
+$result = $mysqli->ServiceQuery("SHOW TABLES LIKE 'config_blood'");
+
+if($result->num_rows > 0){
+    $textQuery = "REPLACE INTO `config_blood` VALUES ('1', 'A'),
+    ('2', 'B'),
+    ('3', 'O'),
+    ('4', 'AB')";
+    $mysqli->ServiceQuery($textQuery);
+    echo "==== Create Table config_blood Complete ====<br>";
+}
+
+############### สร้างตาราง config_area_province  ###############
+include_once ("install/install_area_province.php");
+
+############### สร้างตาราง config_area_district  ###############
+include_once ("install/install_area_district.php");
+
+############### สร้างตาราง config_area_subdistrict  ###############
+include_once ("install/install_area_subdistrict.php");
+
+############### สร้างตาราง general  ###############
+include_once ("install/install_general.php");
 ?>

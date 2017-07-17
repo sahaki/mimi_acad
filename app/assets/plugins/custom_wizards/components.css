@@ -43,7 +43,7 @@
 }
 
 .panel-tab .panel-heading ul li.active a i {
-    color: #f59c1a
+    color: #00ACAC
 }
 
 .panel-tab .panel-heading ul li a {
@@ -72,7 +72,7 @@
 }
 
 .panel-tab .panel-heading ul li a:hover i {
-    color: #f59c1a
+    color: #00ACAC
 }
 
 .panel-tab .panel-heading ul li a>i,.panel-tab .panel-heading ul li a>span {
@@ -168,7 +168,7 @@
 
 
 .progress-bar.progress-bar-success {
-    background-color: #f59c1a !important;
+    background-color: #00ACAC !important;
 }
 
 .pager li>a:focus, .pager li>a:hover, .pager li>span:focus, .pager li>span:hover, .pagination>li>a:focus, .pagination>li>a:hover {
