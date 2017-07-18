@@ -1,7 +1,7 @@
 <?PHP
 $dataTest = array(
 	'0'=>array(
-		'fullname'=>'นายมานี มีโชค',
+		'fullname'=>'loris karius',
 		'age'=>'23',
 		'position'=>'โกฟุตบอล',
 		'data_general'=>'5',
@@ -10,7 +10,7 @@ $dataTest = array(
 		'data_parent'=>'3',
 	),
 	'1'=>array(
-		'fullname'=>'นายมานี มีโชค',
+		'fullname'=>'Alex Manninger',
 		'age'=>'22',
 		'position'=>'โกฟุตบอล',
 		'data_general'=>'5',
@@ -19,7 +19,7 @@ $dataTest = array(
 		'data_parent'=>'3',
 	),
 	'2'=>array(
-		'fullname'=>'นายมานี มีโชค',
+		'fullname'=>'Simon Mignolet',
 		'age'=>'21',
 		'position'=>'โกฟุตบอล',
 		'data_general'=>'5',
@@ -30,6 +30,9 @@ $dataTest = array(
 
 );
 ?>
+
+<!-- ================== datatable ================== -->
+<link href="../assets/plugins/DataTables/css/data-table.css" rel="stylesheet" />
 
 <!-- begin panel -->
 <div class="panel panel-inverse">
@@ -82,5 +85,16 @@ $dataTest = array(
 </div>
 <!-- end panel -->
 
+
+<!-- ================== datatable ================== -->
+<script src="../assets/plugins/DataTables/js/jquery.dataTables.js"></script>
+<script src="../assets/plugins/DataTables/js/dataTables.responsive.js"></script>
+<script src="../assets/js/table-manage-responsive.demo.min.js"></script>
+
+<script>
+	$(document).ready(function() {
+		TableManageResponsive.init();
+	});
+</script>
 
 
