@@ -1,6 +1,6 @@
 <?php
 if($_GET['page'] == 'general_form_keyin') :
-    include_once('../general_form_keyin/form_v1.php');
+    include_once( '../general_form_keyin/form.php' );
 elseif($_GET['page'] == 'general_dashboard') :
 	include_once('../general_dashboard/dashboard.php');
 else: ?>

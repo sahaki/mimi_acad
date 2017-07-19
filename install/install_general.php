@@ -19,6 +19,7 @@ $crateTable = "CREATE TABLE IF NOT EXISTS `general_infomation` (
   `favorite_sport` varchar(50) DEFAULT NULL COMMENT 'กีฬาที่ชอบ',
   `congenital_disease` varchar(50) DEFAULT NULL COMMENT 'โรคประจำตัว',
   `food_allergy` varchar(50) DEFAULT NULL COMMENT 'แพ้อาหาร',
+  `img_path` varchar(50) DEFAULT NULL COMMENT 'path รูป',
   PRIMARY KEY (`general_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='ข้อมูลบุคคล ทั่วไป' ";
 $mysqli->ServiceQuery($crateTable);
@@ -27,9 +28,18 @@ if($result->num_rows > 0){
     echo "==== Create Table general_infomation Complete ====<br>";
 }
 
+$createTrigger = "DROP TRIGGER IF EXISTS `on_general_delete`";
+$mysqli->ServiceQuery($createTrigger);
+
+$createTrigger = "CREATE TRIGGER `on_general_delete` BEFORE DELETE ON `general_infomation` FOR EACH ROW BEGIN
+    DELETE FROM general_football WHERE general_id = OLD.general_id;
+    DELETE FROM general_address WHERE general_id = OLD.general_id;
+    DELETE FROM general_curator WHERE general_id = OLD.general_id;
+END";
+$mysqli->ServiceQuery($createTrigger);
+
 $crateTable = "CREATE TABLE IF NOT EXISTS `general_address` (
-  `general_address_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสที่อยู่',
-  `general_id` int(11) DEFAULT NULL COMMENT 'รหัสบุคลล',
+  `general_id` int(11) NOT NULL COMMENT 'รหัสบุคลล',
   `addr_no` varchar(20) DEFAULT NULL COMMENT 'บ้านเลขที่',
   `addr_moo` varchar(5) DEFAULT NULL COMMENT 'หมู่',
   `addr_alley` varchar(50) DEFAULT NULL COMMENT 'ซอย',
@@ -38,9 +48,8 @@ $crateTable = "CREATE TABLE IF NOT EXISTS `general_address` (
   `district_id` int(8) DEFAULT NULL COMMENT 'อำเภอ',
   `subdistrict_id` int(8) DEFAULT NULL COMMENT 'ตำบล',
   `postcode` int(5) DEFAULT NULL COMMENT 'รหัสไปรษณีย์',
-  PRIMARY KEY (`general_address_id`),
-  KEY `address_ref_general` (`general_id`),
-  CONSTRAINT `address_ref_general` FOREIGN KEY (`general_id`) REFERENCES `general_infomation` (`general_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  PRIMARY KEY (`general_id`),
+  KEY `address_ref_general` (`general_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='ข้อมูลที่อยู่'";
 
 $mysqli->ServiceQuery($crateTable);

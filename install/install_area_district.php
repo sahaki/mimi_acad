@@ -1,6 +1,5 @@
 <?php
-$crateTable = "CREATE TABLE IF NOT EXISTS `config_area_district`;
-CREATE TABLE `config_area_district` (
+$crateTable = "CREATE TABLE IF NOT EXISTS `config_area_district`(
   `code` int(8) NOT NULL DEFAULT '0' COMMENT 'รหัสพื้นที่',
   `name_th` varchar(255) NOT NULL COMMENT 'ชื่อไทย',
   `name_eng` varchar(255) DEFAULT NULL COMMENT 'ชื่ออังกฤษ',

@@ -20,4 +20,5 @@
 <script src="../assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 <script src="../assets/js/dashboard.min.js"></script>
 <script src="../assets/js/apps.min.js"></script>
+<script src="../assets/sweetalert/dist/sweetalert.min.js"></script>
 <!-- ================== END PAGE LEVEL JS ==================

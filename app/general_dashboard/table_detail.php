@@ -1,34 +1,35 @@
 <?PHP
-$dataTest = array(
-	'0'=>array(
-		'fullname'=>'loris karius',
-		'age'=>'23',
-		'position'=>'โกฟุตบอล',
-		'data_general'=>'5',
-		'data_football'=>'5',
-		'data_address'=>'4',
-		'data_parent'=>'3',
-	),
-	'1'=>array(
-		'fullname'=>'Alex Manninger',
-		'age'=>'22',
-		'position'=>'โกฟุตบอล',
-		'data_general'=>'5',
-		'data_football'=>'5',
-		'data_address'=>'4',
-		'data_parent'=>'3',
-	),
-	'2'=>array(
-		'fullname'=>'Simon Mignolet',
-		'age'=>'21',
-		'position'=>'โกฟุตบอล',
-		'data_general'=>'5',
-		'data_football'=>'5',
-		'data_address'=>'4',
-		'data_parent'=>'3',
-	)
+$sql = "SELECT
+t1.general_id,
+t1.register_date,
+t1.birth_date,
+t1.idcard,
+t1.name_th,
+t1.surname_th,
+t1.nickname_th,
+t1.origin,
+t1.nationality,
+t1.religion,
+t1.blood_id,
+t1.height,
+t1.weight,
+t1.education_class,
+t1.school_name,
+t1.favorite_sport,
+t1.congenital_disease,
+t1.food_allergy,
+t1.img_path
+FROM
+general_infomation AS t1";
+$result = $mysqli->ServiceQuery($sql);
 
-);
+function getAge($then) {
+	$then_ts = strtotime($then);
+	$then_year = date('Y', $then_ts);
+	$age = date('Y') - $then_year;
+	if(strtotime('+' . $age . ' years', $then_ts) > time()) $age--;
+	return $age;
+}
 ?>
 
 <!-- ================== datatable ================== -->
@@ -46,37 +47,43 @@ $dataTest = array(
 		<table id="data-table" class="table table-striped table-bordered nowrap" width="100%">
 			<thead>
 			<tr>
-				<td rowspan="2" >ลำดับ</td>
-				<td rowspan="2" >ชื่อ - สกุล</td>
-				<td rowspan="2" >อายุ</td>
-				<td rowspan="2" >ตำแหน่ง</td>
-				<td colspan="4">ความสมบูรณ์ข้อมูล</td>
-				<td rowspan="2">เครื่องมือ</td>
-			</tr>
-			<tr>
-				<td >ทั่วไป</td>
-				<td > ฟุตบอล</td>
-				<td >ที่อยู่</td>
-				<td >ผู้ปกครอง</td>
+				<td>ลำดับ</td>
+                <td>เลขประจำตัวประชาชน</td>
+				<td>ชื่อ - สกุล</td>
+                <td>ชื่อเล่น</td>
+				<td>อายุ</td>
+				<td>ตำแหน่งที่ถนัด</td>
+				<td>โรงเรียน</td>
+				<td>รายละเอียด</td>
 			</tr>
 			</thead>
 			<tbody>
 			<?PHP
+            $cnt = 1;
+			foreach ($result as $key => $val){
+			    $idcard = (trim($val['idcard']) != '') ? $val['idcard'] : 'ไม่ระบุ';
+				$fullname = (trim($val['name_th'].' '.$val['surname_th']) != '') ? $val['name_th'].' '.$val['surname_th'] : 'ไม่ระบุ';
+                $nickname = (trim($val['nickname_th']) != '') ? $val['nickname_th'] : 'ไม่ระบุ';
+				$age = (trim($val['birth_date']) != '') ? getAge($val['birth_date']) : 'ไม่ระบุ';
+				$schoolname = (trim($val['school_name']) != '') ? $val['school_name'] : 'ไม่ระบุ';
 
-			foreach ($dataTest as $key => $val){
-				echo'
+                echo'
 				<tr class="odd gradeA">
-					<td class="text-center">'.($key+1).'</td>
-					<td>'.$val['fullname'].'</td>
-					<td class="text-center">'.$val['age'].'</td>
-					<td>'.$val['position'].'</td>
-					<td class="text-center">'.$val['data_general'].'</td>
-					<td class="text-center">'.$val['data_football'].'</td>
-					<td class="text-center">'.$val['data_address'].'</td>
-					<td class="text-center">'.$val['data_parent'].'</td>
-					<td></td>
+					<td class="text-center">'.($cnt).'</td>
+					<td class="text-center">'.$idcard.'</td>
+					<td>'.$fullname.'</td>
+					<td>'.$nickname.'</td>
+					<td class="text-center">'.$age.'</td>
+					<td>-</td>
+					<td>'.$schoolname.'</td>
+					<td class="text-center">
+					<a href="?page=general_form_keyin&general_id='.$val['general_id'].'" class="btn btn-sm btn-icon btn-circle btn-warning">
+					<i class="fa fa-folder-open" style="margin-left: 3px;"></i></a>
+					</td>
+
 				</tr>
 				';
+				$cnt++;
 			}
 			?>
 			</tbody>

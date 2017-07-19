@@ -15,6 +15,7 @@
 <link href="../assets/plugins/bootstrap-datepicker/css/datepicker.css" rel="stylesheet" />
 <link href="../assets/plugins/bootstrap-datepicker/css/datepicker3.css" rel="stylesheet" />
 <link href="../assets/plugins/gritter/css/jquery.gritter.css" rel="stylesheet" />
+<link href="../assets/sweetalert/dist/sweetalert.css" rel="stylesheet" id="theme" />
 <!-- ================== END PAGE LEVEL STYLE ================== -->
 
 <!-- ================== CUSTOM ================== -->
