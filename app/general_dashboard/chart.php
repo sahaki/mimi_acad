@@ -27,10 +27,9 @@
 <!-- ================== chart ================== -->
 <script src="../assets/plugins/morris/raphael.min.js"></script>
 <script src="../assets/plugins/morris/morris.js"></script>
-<script src="../assets/js/apps.min.js"></script>
 <script>
     $(document).ready(function() {
-        App.init();
+
     });
 
     var getMonthName=function(e){
