@@ -1,4 +1,39 @@
 <?PHP
+function getAge($then) {
+    $then_ts = strtotime($then);
+    $then_year = date('Y', $then_ts);
+    $age = date('Y') - $then_year;
+    if(strtotime('+' . $age . ' years', $then_ts) > time()) $age--;
+    return $age;
+}
+
+function getFootballPostion($general_id){
+    global $mysqli,$positionList;
+    $text = 'ไม่ระบุ';
+    $sql = "SELECT
+    t1.position_id_list
+    FROM
+    general_football AS t1
+    WHERE t1.general_id = '{$general_id}'";
+    $result = $mysqli->ServiceQuery($sql);
+    if(count($result)>0){
+        foreach ($result as $index => $value){
+            $position_list = $value['position_id_list'];
+        }
+
+        if($position_list != ''){
+            $arr = explode(',',$position_list);
+            unset($arr[count($arr)-1]);
+            $text = '';
+            foreach ($arr as $val){
+                $text .= $positionList[$val].', ';
+            }
+            $text = substr($text,0,strlen($text)-2);
+        }
+    }
+    return $text;
+}
+
 $sql = "SELECT
 t1.general_id,
 t1.register_date,
@@ -23,12 +58,16 @@ FROM
 general_infomation AS t1";
 $result = $mysqli->ServiceQuery($sql);
 
-function getAge($then) {
-	$then_ts = strtotime($then);
-	$then_year = date('Y', $then_ts);
-	$age = date('Y') - $then_year;
-	if(strtotime('+' . $age . ' years', $then_ts) > time()) $age--;
-	return $age;
+$sql = "SELECT
+t1.position_id,
+t1.position_label
+FROM
+config_position AS t1
+WHERE t1.`status` = '1'
+ORDER BY t1.orderby ASC";
+$position = $mysqli->ServiceQuery($sql);
+foreach ($position as $index => $value){
+    $positionList[$value['position_id']] = $value[position_label];
 }
 ?>
 
@@ -39,7 +78,7 @@ function getAge($then) {
 <div class="panel panel-inverse">
 	<div class="panel-heading">
 		<div class="panel-heading-btn">
-			<a href="?page=general_form_keyin" class="btn btn-sm btn-icon btn-circle btn-success" ><i class="fa fa-plus"></i></a>
+			<a href="?page=general_form_keyin" class="btn btn-sm btn-icon btn-circle btn-success" ><i class="fa fa-plus" style="margin-top: 3px;"></i></a>
 		</div>
 		<h4 class="panel-title">รายชื่อนักกีฬา</h4>
 	</div>
@@ -74,7 +113,7 @@ function getAge($then) {
 					<td>'.$fullname.'</td>
 					<td>'.$nickname.'</td>
 					<td class="text-center">'.$age.'</td>
-					<td>-</td>
+					<td>'.getFootballPostion($val['general_id']).'</td>
 					<td>'.$schoolname.'</td>
 					<td class="text-center">
 					<a href="?page=general_form_keyin&general_id='.$val['general_id'].'" class="btn btn-sm btn-icon btn-circle btn-warning">
@@ -82,7 +121,7 @@ function getAge($then) {
 					</td>
 
 				</tr>
-				';
+                ';
 				$cnt++;
 			}
 			?>

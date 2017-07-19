@@ -13,7 +13,7 @@
 	}
 	$positionList = explode(',',$football['position_id_list'])
 	?>
-    <fieldset class="curator_contrainer">
+    <fieldset>
         <legend class="pull-left width-full form-legend">ข้อมูลเกี่ยวกับฟุตบอล</legend>
         <div class="row">
             <div class="col-md-12">
@@ -67,7 +67,7 @@
                 </div>
             </div>
         </div>
-        <input type="hidden" name="football_general_id" id="football_general_id" value="<?php echo $_GET[general_id]?>">
+
         <div class="col-md-12" style="text-align: right; padding: 0;">
             <input type="button" id="next_tab3" class="btn btn-success" value="บันทึกข้อมูลทั่วไป >>" tabindex="18">
         </div>
@@ -82,8 +82,6 @@
                         position_id_list = position_id_list+$(this).val()+',';
                     }
                 });
-
-                console.log(position_id_list);
 
                 if($.trim($('#general_id').val()) == ''){
                     swal('ไม่สามารถดำเนินการได้', "กรุณาบันทึกข้อมูลใน Step 1 ข้อมูลผู้สมัคร", "error");

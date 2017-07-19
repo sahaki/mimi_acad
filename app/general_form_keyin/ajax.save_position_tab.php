@@ -8,6 +8,6 @@ favorite_sportsman = '{$_POST[favorite_sportsman]}',
 favorite_inter_club = '{$_POST[favorite_inter_club]}',
 favorite_thai_club = '{$_POST[favorite_thai_club]}'";
 
-$sql .= $sql_detail.$sql_where;
+$sql .= $sql_detail;
 $result = $mysqli->ServiceQuery($sql);
 echo $_POST['general_id'];

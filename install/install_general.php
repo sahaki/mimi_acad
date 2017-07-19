@@ -64,7 +64,7 @@ $crateTable = "CREATE TABLE IF NOT EXISTS `general_curator` (
   `curator_name_th` varchar(50) DEFAULT NULL COMMENT 'ชื่อ',
   `curator_surname_th` varchar(50) DEFAULT NULL COMMENT 'นามสกุล',
   `curator_tel` varchar(50) DEFAULT NULL COMMENT 'เบอร์โทร',
-  `carator_relation` varchar(50) DEFAULT NULL COMMENT 'ความสัมพันธ์',
+  `curator_relation` varchar(50) DEFAULT NULL COMMENT 'ความสัมพันธ์',
   PRIMARY KEY (`curator_id`),
   KEY `curator_ref_general` (`general_id`),
   CONSTRAINT `curator_ref_general` FOREIGN KEY (`general_id`) REFERENCES `general_infomation` (`general_id`) ON DELETE NO ACTION ON UPDATE NO ACTION

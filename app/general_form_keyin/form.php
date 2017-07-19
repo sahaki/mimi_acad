@@ -18,8 +18,8 @@
             <div class="panel panel-inverse">
                 <div class="panel-heading">
                     <div class="panel-heading-btn">
-                        <a href="?page=general_dashboard" class="btn btn-sm btn-icon btn-circle btn-default"
-                           title="back"><i class="fa fa-angle-double-left"></i></a>
+                        <a href="javascript:;" class="btn btn-sm btn-icon btn-circle btn-default"
+                           title="back" id="goback"><i class="fa fa-angle-double-left"></i></a>
 
                         <a href="javascript:;" class="btn btn-sm btn-icon btn-circle btn-warning"
                            data-click="panel-expand"><i class="fa fa-expand"></i></a>
@@ -113,7 +113,7 @@
                                     <!--/ End tabs content -->
 
                                     <!-- Start pager -->
-                                    <div class="panel-footer">
+                                    <div class="panel-footer" style="display:none;">
                                         <ul class="pager wizard no-margin">
                                             <li class="previous"><a href="javascript:void(0);">ย้อนกลับ</a></li>
                                             <li class="next"><a href="javascript:void(0);">ต่อไป</a></li>
@@ -122,7 +122,21 @@
                                     <!--/ End pager -->
                                     <script>
                                         $(document).ready(function(){
-
+                                            $('#goback').on('click',function () {
+                                                swal({
+                                                        title: "คำเตือน",
+                                                        text: "คุณต้องการออกจากหน้านี้หรือไม่?",
+                                                        type: "warning",
+                                                        showCancelButton: true,
+                                                        confirmButtonColor: "#DD6B55",
+                                                        confirmButtonText: "ยืนยัน",
+                                                        cancelButtonText: "ยกเลิก",
+                                                        closeOnConfirm: false
+                                                    },
+                                                    function(){
+                                                        window.location = '?page=general_dashboard';
+                                                    });
+                                            })
                                         });
                                     </script>
                                 </div>

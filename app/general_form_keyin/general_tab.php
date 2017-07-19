@@ -188,7 +188,7 @@
 		<!-- end row -->
         <input type="hidden" name="general_id" id="general_id" value="<?php echo $_GET['general_id']?>">
         <div class="col-md-12" style="text-align: right; padding: 0;">
-            <input type="button" id="next_tab2" class="btn btn-success" value="บันทึกข้อมูลทั่วไป >>" tabindex="18">
+            <input type="button" id="next_tab2" class="btn btn-success" value="บันทึกข้อมูล >>" tabindex="18">
         </div>
 	</fieldset>
     <script>

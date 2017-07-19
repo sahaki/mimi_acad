@@ -54,3 +54,4 @@ include_once ("install/install_area_subdistrict.php");
 ############### สร้างตาราง general  ###############
 include_once ("install/install_general.php");
 ?>
+<br>Install complete <a href="app/main/">Click here</a>
