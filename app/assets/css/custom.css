@@ -47,3 +47,7 @@ fieldset label,fieldset input{
     vertical-align: middle;
 
 }
+
+.hideobject{
+    display: none;
+}
