@@ -51,3 +51,8 @@ fieldset label,fieldset input{
 .hideobject{
     display: none;
 }
+
+legend{
+    font-size: 14px;
+    margin-bottom: 0;
+}
