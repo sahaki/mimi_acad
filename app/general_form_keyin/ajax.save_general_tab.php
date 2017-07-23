@@ -45,7 +45,18 @@ $sql .= $sql_detail.$sql_where;
 $result = $mysqli->ServiceQuery($sql);
 
 if($_POST['general_id'] == ''){
-	echo $mysqli->connect->insert_id;
+	echo $insertId = $mysqli->connect->insert_id;
+
 }else{
-	echo $_POST['general_id'];
+	echo $insertId = $_POST['general_id'];
+}
+
+if(count($_FILES['file_person_img']['name']) > 0 && $insertId != ''){
+    $path = $_FILES['file_person_img']['name'];
+    $ext = pathinfo($path, PATHINFO_EXTENSION);
+    $imgPath = '../../media/person_register/'.$insertId.'.'.$ext;
+    if(move_uploaded_file($_FILES['file_person_img']['tmp_name'], $imgPath)){
+        $sql = "UPDATE general_infomation SET img_path='{$imgPath}' WHERE general_id = '{$insertId}'";
+        $result = $mysqli->ServiceQuery($sql);
+    }
 }

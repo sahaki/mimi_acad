@@ -6,7 +6,7 @@
         <h4 class="panel-title">ตั้งค่าข้อมูลเว็บไซต์</h4>
     </div>
     <div class="panel-body">
-        <form class="form-horizontal form-bordered" data-parsley-validate="true" name="demo-form" novalidate="">
+        <form class="form-horizontal form-bordered" id="general_setting" data-parsley-validate="true" name="demo-form" novalidate="">
             <div class="form-group">
                 <legend>ข้อมูลทั่วไป</legend>
                 <label class="control-label col-md-3 col-sm-3">ชื่อระบบ :</label>
@@ -21,8 +21,9 @@
                 </div>
                 <label class="control-label col-md-3 col-sm-3">Logo :</label>
                 <div class="col-md-8 col-sm-8">
-                    <img src="<?php echo $_SESSION['core_config']['logo_path']?>" width="50"><br>
+                    <img src="<?php echo $_SESSION['core_config']['logo_path']?>?date=<?php echo date('Y-m-d')?>" width="50" id="img_logo" style="cursor: pointer"><br>
                     <div style="margin-top:5px;">คลิกที่รูปเพื่ออัพโหลดรูปใหม่</div>
+                    <input type="file" name="file_logo_img" id="file_logo_img" style="display: none;">
                 </div>
             </div>
             <div class="form-group" style="margin-top: 10px;">
@@ -55,18 +56,48 @@
         $('#save_data').on('click',function(){
             $.ajax({
                 type: 'POST',
+                async: false,
                 url: '../setting_general/ajax.save_general_tab.php',
-                data: {
-                    'system_name': $('#system_name').val(),
-                    'company_name': $('#company_name').val(),
-                    'height_unit': $('#height_unit').val(),
-                    'weight_unit': $('#weight_unit').val()
-                },
+                data: new FormData($("#general_setting")[0]),
                 success: function (data) {
-                    swal("", "บันทึกข้อมุลเรียบร้อย", "success");
-                }
+                    swal({
+                            title: "",
+                            text: "บันทึกข้อมุลเรียบร้อย",
+                            type: "success",
+                            confirmButtonText: "ตกลง",
+                            closeOnConfirm: false
+                        },
+                        function(){
+                            window.location = '';
+                        });
+                },
+                cache: false,
+                processData: false,
+                contentType: false
             });
 
+        });
+
+        $('#img_logo').on('click',function(){
+            $('#file_logo_img').click();
+        });
+
+        $("#file_logo_img").change(function(){
+
+            var file = this.files[0];
+            var fileType = file["type"];
+            var ValidImageTypes = ["image/gif", "image/jpeg", "image/png"];
+
+            if ($.inArray(fileType, ValidImageTypes) < 0) {
+                swal("", "ระบบไม่รองรับ ไฟล์ "+fileType, "error");
+                $("#file_logo_img").val('');
+            }else{
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#img_logo').attr('src', e.target.result);
+                };
+                reader.readAsDataURL(this.files[0]);
+            }
         });
     });
 </script>

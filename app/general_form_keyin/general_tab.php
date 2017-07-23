@@ -39,13 +39,17 @@
         }else{
 	        $birth_date = '';
         }
+
+        $img_path = (file_exists($general['img_path'])) ? $general['img_path'] : "../../media/person_register/blank.png";
         ?>
-		<legend class="pull-left width-full form-legend">ข้อมูลทั่วไป</legend>
+        <form id="form_general_tab" method="post">
+		<legend class="pull-left width-full form-legend" style="margin-bottom: 10px;">ข้อมูลทั่วไป</legend>
 		<!-- begin row -->
 		<div class="row">
 			<div class="col-md-4" style="text-align: center">
-				<img src="../../media/person_register/images.jpg" width="180"><br>
+				<img src="<?php echo $img_path?>?date=<?php echo date('Y-m-d')?>" width="180" style="cursor: pointer;" id="person_img"><br>
                 <div style="margin-top:5px;">คลิกที่รูปเพื่ออัพโหลดรูปใหม่</div>
+                <input type="file" name="file_person_img" id="file_person_img" style="display: none;">
 			</div>
 			<div class="col-md-4">
 				<div class="form-group">
@@ -190,6 +194,7 @@
         <div class="col-md-12" style="text-align: right; padding: 0;">
             <input type="button" id="next_tab2" class="btn btn-success" value="บันทึกข้อมูล >>" tabindex="18">
         </div>
+        </form>
 	</fieldset>
     <script>
         $(document).ready(function(){
@@ -204,36 +209,44 @@
                 format: 'dd/mm/yyyy'
             });
 
+            $('#person_img').on('click',function(){
+                $('#file_person_img').click();
+            });
+
+            $("#file_person_img").change(function(){
+
+                var file = this.files[0];
+                var fileType = file["type"];
+                var ValidImageTypes = ["image/gif", "image/jpeg", "image/png"];
+
+                if ($.inArray(fileType, ValidImageTypes) < 0) {
+                    swal("", "ระบบไม่รองรับ ไฟล์ "+fileType, "error");
+                    $("#file_person_img").val('');
+                }else{
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $('#person_img').attr('src', e.target.result);
+                    };
+                    reader.readAsDataURL(this.files[0]);
+                }
+            });
+
             /* Verify form keyin and save*/
             $('#next_tab2').on('click',function(){
+                var formData = new FormData($('#form_general_tab')[0]);
+                console.log(formData);
                 $.ajax({
-                    dataType: "json",
                     type: 'POST',
+                    async: false,
                     url: '../general_form_keyin/ajax.save_general_tab.php',
-                    data: {
-                        'general_id': $('#general_id').val(),
-                        'register_date': $('#register_date').val(),
-                        'birth_date': $('#birth_date').val(),
-                        'idcard': $('#idcard').val(),
-                        'name_th': $('#name_th').val(),
-                        'surname_th': $('#surname_th').val(),
-                        'nickname_th': $('#nickname_th').val(),
-                        'origin': $('#origin').val(),
-                        'nationality': $('#nationality').val(),
-                        'religion': $('#religion').val(),
-                        'blood_id': $('#blood_id').val(),
-                        'height': $('#height').val(),
-                        'weight': $('#weight').val(),
-                        'education_class': $('#education_class').val(),
-                        'school_name': $('#school_name').val(),
-                        'favorite_sport': $('#favorite_sport').val(),
-                        'congenital_disease': $('#congenital_disease').val(),
-                        'food_allergy': $('#food_allergy').val()
-                    },
+                    data: new FormData($("#form_general_tab")[0]),
                     success: function (data) {
                         $('#general_id').val($.trim(data));
                         $('.panel-tab').find('li.next').find('a').click();
-                    }
+                    },
+                    cache: false,
+                    processData: false,
+                    contentType: false
                 });
 
             });

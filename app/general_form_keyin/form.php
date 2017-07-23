@@ -95,7 +95,7 @@
 
                                     <!-- Start tabs content -->
                                     <div class="panel-body">
-                                        <form action="#" class="tab-content">
+                                        <div class="tab-content">
                                             <div class="tab-pane fade in active inner-all" id="tab3-1">
 												<?php include( "general_tab.php" ); ?>
                                             </div>
@@ -108,7 +108,7 @@
                                             <div class="tab-pane fade inner-all" id="tab3-4">
 												<?php include( "curator_tab.php" ); ?>
                                             </div>
-                                        </form>
+                                        </div>
                                     </div><!-- /.panel-body -->
                                     <!--/ End tabs content -->
 

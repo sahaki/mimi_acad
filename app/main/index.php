@@ -42,7 +42,7 @@ foreach ($resulte as $index => $value){
             <!-- begin mobile sidebar expand / collapse button -->
             <div class="header">
                 <a href="index.html" class="navbar-brand">
-                    <img src="<?php echo $_SESSION['core_config']['logo_path']?>" width="32" style="float:left; margin-right: 10px;">
+                    <img src="<?php echo $_SESSION['core_config']['logo_path']?>?date=<?php echo date('Y-m-d')?>" width="32" style="float:left; margin-right: 10px;">
                     <?php echo $_SESSION['core_config']['company_name']?></a>
                 <button type="button" class="navbar-toggle" data-click="sidebar-toggled">
                     <span class="icon-bar"></span>
