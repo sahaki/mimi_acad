@@ -12,4 +12,5 @@
         <div class="col-md-12 ui-sortable">
             <?php include "general_tab.php";?>
         </div>
+
 </div>

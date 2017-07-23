@@ -1,4 +1,6 @@
 <?php
+session_start();
+unset($_SESSION['user_login']);
 include_once('include_php.php');
 ?>
 <!DOCTYPE html>
@@ -30,8 +32,9 @@ include_once('include_php.php');
         <!-- begin brand -->
         <div class="login-header">
             <div class="brand">
-                <span class="logo"></span> ระบบจัดการข้อมูลสมาชิก
-                <small>ศูนย์ฝีกฟุตบอลเชียงใหม่วอร์ริเออร์ อะคาเดมี่</small>
+                <img src="<?php echo $_SESSION['core_config']['logo_path']?>" width="50" style="float: left; margin-right: 10px;">
+                <h4><?php echo $_SESSION['core_config']['system_name']?></h4>
+                <small><?php echo $_SESSION['core_config']['company_name']?></small>
             </div>
             <div class="icon">
                 <i class="fa fa-sign-in"></i>
@@ -41,18 +44,13 @@ include_once('include_php.php');
         <div class="login-content">
             <form action="" method="POST" class="margin-bottom-0">
                 <div class="form-group m-b-20">
-                    <input type="text" class="form-control input-lg" placeholder="Username" />
+                    <input type="text" id="username" class="form-control input-lg" placeholder="Username"/>
                 </div>
                 <div class="form-group m-b-20">
-                    <input type="text" class="form-control input-lg" placeholder="Password" />
-                </div>
-                <div class="checkbox m-b-20">
-                    <label>
-                        <input type="checkbox" /> Remember Me
-                    </label>
+                    <input type="password" id="password" class="form-control input-lg" placeholder="Password" />
                 </div>
                 <div class="login-buttons">
-                    <button type="button" onclick="window.location='index.php?page=general_dashboard' " class="btn btn-success btn-block btn-lg">Sign me in</button>
+                    <button type="button" id="bt_login" class="btn btn-success btn-block btn-lg">Sign me in</button>
                 </div>
             </form>
         </div>
@@ -60,33 +58,54 @@ include_once('include_php.php');
     <!-- end login -->
 </div>
 <!-- end page container -->
-
-<!-- ================== BEGIN BASE JS ================== -->
-<script src="assets/plugins/jquery/jquery-1.9.1.min.js"></script>
-<script src="assets/plugins/jquery/jquery-migrate-1.1.0.min.js"></script>
-<script src="assets/plugins/jquery-ui/ui/minified/jquery-ui.min.js"></script>
-<script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
-<!--[if lt IE 9]>
-<script src="assets/crossbrowserjs/html5shiv.js"></script>
-<script src="assets/crossbrowserjs/respond.min.js"></script>
-<script src="assets/crossbrowserjs/excanvas.min.js"></script>
-<![endif]-->
-<script src="assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-<script src="assets/plugins/jquery-cookie/jquery.cookie.js"></script>
-<!-- ================== END BASE JS ================== -->
-
-<!-- ================== BEGIN PAGE LEVEL JS ================== -->
-<script src="assets/js/apps.min.js"></script>
-<!-- ================== END PAGE LEVEL JS ================== -->
-
 <script>
     $(document).ready(function() {
         App.init();
+
+        $('#bt_login').on('click',function(){
+            var checkErr = 0;
+            if($.trim($('#username').val()) == ''){
+                $('#username').addClass('parsley-error');
+                checkErr = 1;
+            }else{
+                $('#username').removeClass('parsley-error');
+            }
+
+            if($.trim($('#password').val()) == ''){
+                $('#password').addClass('parsley-error');
+                checkErr = 1;
+            }else{
+                $('#password').removeClass('parsley-error');
+            }
+
+            if(checkErr === 1){
+                return false;
+            }else{
+                $.ajax({
+                    type: 'POST',
+                    url: 'ajax.login.php',
+                    data: {
+                        'username': $('#username').val(),
+                        'password': $('#password').val()
+                    },
+                    success: function (data) {
+                        if($.trim(data) == 'error'){
+                            swal({
+                                    title: "พบข้อผิดพลาด!",
+                                    text: "Username หรือ Password อาจจะไม่ถูกต้อง",
+                                    type: "error",
+                                    confirmButtonText: "ตกลง",
+                                    closeOnConfirm: true
+                                });
+                        }else{
+                            window.location = 'index.php?page=general_dashboard';
+                        }
+                    }
+                });
+            }
+
+        });
     });
-</script>
-<script>
-    ga('create', 'UA-53034621-1', 'auto');
-    ga('send', 'pageview');
 </script>
 </body>
 </html>

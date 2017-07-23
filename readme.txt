@@ -14,3 +14,7 @@ http://[SERVER_NAME]/[Project_name]/install.php ตัวอย่าง http://
 
 4. เรียก URL ตาม Link เพื่อเข้าหน้าหลักของระบบ
 http://[SERVER_NAME]/[Project_name]/app/main/ ตัวอย่าง http://localhost/academe/app/main
+
+5. User & password เริ่มต้น
+user : test_user
+pass : test1234

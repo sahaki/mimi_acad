@@ -128,7 +128,7 @@
 
 			<div class="col-md-4">
 				<div class="form-group">
-					<label>ส่วนสูง</label>
+					<label>ส่วนสูง (<?php echo $_SESSION['core_config']['height_unit']?>)</label>
 					<input type="text" name="height" id="height" placeholder="ส่วนสูง" class="form-control"
                            tabindex="11" value="<?php echo $general['height']?>"/>
 				</div>
@@ -136,7 +136,7 @@
 
 			<div class="col-md-4">
 				<div class="form-group">
-					<label>น้ำหนัก</label>
+					<label>น้ำหนัก (<?php echo $_SESSION['core_config']['weight_unit']?>)</label>
 					<input type="text" name="weight" id="weight" placeholder="น้ำหนัก" class="form-control"
                            tabindex="12" value="<?php echo $general['weight']?>"/>
 				</div>

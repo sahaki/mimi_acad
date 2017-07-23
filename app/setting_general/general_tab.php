@@ -9,41 +9,64 @@
         <form class="form-horizontal form-bordered" data-parsley-validate="true" name="demo-form" novalidate="">
             <div class="form-group">
                 <legend>ข้อมูลทั่วไป</legend>
-                <label class="control-label col-md-3 col-sm-3" for="fullname">ชื่อระบบ :</label>
+                <label class="control-label col-md-3 col-sm-3">ชื่อระบบ :</label>
                 <div class="col-md-8 col-sm-8">
-                    <input class="form-control" type="text" id="fullname" name="fullname" placeholder="ชื่อระบบ" data-parsley-required="true" data-parsley-id="8558"><ul class="parsley-errors-list" id="parsley-id-8558"></ul>
+                    <input class="form-control" type="text" id="system_name" name="system_name" placeholder="ชื่อระบบ"
+                           value="<?php echo $_SESSION['core_config']['system_name']?>">
                 </div>
-                <label class="control-label col-md-3 col-sm-3" for="fullname">หน่วยงาน :</label>
+                <label class="control-label col-md-3 col-sm-3">หน่วยงาน :</label>
                 <div class="col-md-8 col-sm-8">
-                    <input class="form-control" type="text" id="fullname" name="fullname" placeholder="หน่วยงาน" data-parsley-required="true" data-parsley-id="8558"><ul class="parsley-errors-list" id="parsley-id-8558"></ul>
+                    <input class="form-control" type="text" id="company_name" name="company_name" placeholder="หน่วยงาน"
+                           value="<?php echo $_SESSION['core_config']['company_name']?>">
                 </div>
-                <label class="control-label col-md-3 col-sm-3" for="fullname">Logo :</label>
+                <label class="control-label col-md-3 col-sm-3">Logo :</label>
                 <div class="col-md-8 col-sm-8">
-                    <img src="../../media/person_register/images.jpg" width="50"><br>
+                    <img src="<?php echo $_SESSION['core_config']['logo_path']?>" width="50"><br>
                     <div style="margin-top:5px;">คลิกที่รูปเพื่ออัพโหลดรูปใหม่</div>
                 </div>
             </div>
             <div class="form-group" style="margin-top: 10px;">
                 <legend>ฟอร์มบันทึกข้อมูล</legend>
-                <label class="control-label col-md-3 col-sm-3" for="fullname">ส่วนสูง :</label>
+                <label class="control-label col-md-3 col-sm-3">ส่วนสูง :</label>
                 <div class="col-md-8 col-sm-8">
                     <div class="col-md-2" style="margin: 0; padding: 0;">
-                        <input class="form-control" type="text" id="fullname" name="fullname" placeholder="ส่วนสูง" data-parsley-required="true" data-parsley-id="8558"><ul class="parsley-errors-list" id="parsley-id-8558"></ul>
+                        <input class="form-control" type="text" id="height_unit" name="height_unit" placeholder="ส่วนสูง"
+                               value="<?php echo $_SESSION['core_config']['height_unit']?>">
                     </div>
                 </div>
 
-                <label class="control-label col-md-3 col-sm-3" for="fullname">น้ำหนัก :</label>
+                <label class="control-label col-md-3 col-sm-3">น้ำหนัก :</label>
                 <div class="col-md-8 col-sm-8">
                     <div class="col-md-2" style="margin: 0; padding: 0;">
-                        <input class="form-control" type="text" id="fullname" name="fullname" placeholder="น้ำหนัก" data-parsley-required="true" data-parsley-id="8558"><ul class="parsley-errors-list" id="parsley-id-8558"></ul>
+                        <input class="form-control" type="text" id="weight_unit" name="weight_unit" placeholder="น้ำหนัก"
+                               value="<?php echo $_SESSION['core_config']['weight_unit']?>">
                     </div>
                 </div>
-
-
-
-
-
+                <label class="control-label col-md-3 col-sm-3"></label>
+                <div class="col-md-6 col-sm-6">
+                    <input type="button" id="save_data" class="btn btn-success" value="บันทึกข้อมูล">
+                </div>
             </div>
         </form>
     </div>
 </div>
+<script>
+    $(document).ready(function(){
+        $('#save_data').on('click',function(){
+            $.ajax({
+                type: 'POST',
+                url: '../setting_general/ajax.save_general_tab.php',
+                data: {
+                    'system_name': $('#system_name').val(),
+                    'company_name': $('#company_name').val(),
+                    'height_unit': $('#height_unit').val(),
+                    'weight_unit': $('#weight_unit').val()
+                },
+                success: function (data) {
+                    swal("", "บันทึกข้อมุลเรียบร้อย", "success");
+                }
+            });
+
+        });
+    });
+</script>

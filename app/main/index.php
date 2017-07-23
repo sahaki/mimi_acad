@@ -1,5 +1,15 @@
 <?php
+session_start();
 include_once('include_php.php');
+$sql = "SELECT
+t1.config_var,
+t1.config_value
+FROM
+config_core AS t1";
+$resulte = $mysqli->ServiceQuery($sql);
+foreach ($resulte as $index => $value){
+    $_SESSION['core_config'][$value['config_var']] = $value['config_value'];
+}
 ?>
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
@@ -31,7 +41,9 @@ include_once('include_php.php');
         <div class="container-fluid">
             <!-- begin mobile sidebar expand / collapse button -->
             <div class="header">
-                <a href="index.html" class="navbar-brand"><span class="navbar-logo"></span>ศูนย์ฝีกฟุตบอลเชียงใหม่วอร์ริเออร์ อะคาเดมี่</a>
+                <a href="index.html" class="navbar-brand">
+                    <img src="<?php echo $_SESSION['core_config']['logo_path']?>" width="32" style="float:left; margin-right: 10px;">
+                    <?php echo $_SESSION['core_config']['company_name']?></a>
                 <button type="button" class="navbar-toggle" data-click="sidebar-toggled">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -45,12 +57,12 @@ include_once('include_php.php');
                 <li class="dropdown navbar-user">
                     <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
                         <img src="../assets/img/user-13.jpg" alt="" />
-                        <span class="hidden-xs">อ้ายกล นะจ๊ะ</span> <b class="caret"></b>
+                        <span class="hidden-xs"><?php echo $_SESSION['user_login']['full_name']?></span> <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu animated fadeInLeft">
                         <li class="arrow"></li>
-                        <li><a href="javascript:;">แก้ไขข้อมูลส่วนตัว</a></li>
-                        <li><a href="javascript:;">ตั้งค่าระบบ</a></li>
+                        <li><a href="?page=general_dashboard">ข้อมูลนักกีฬา</a></li>
+                        <li><a href="?page=setting_general">ตั้งค่าระบบ</a></li>
                         <li class="divider"></li>
                         <li><a href="login.php">ออกจากระบบ</a></li>
                     </ul>
