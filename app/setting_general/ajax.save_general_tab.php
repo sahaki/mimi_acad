@@ -19,7 +19,7 @@ $result = $mysqli->ServiceQuery($sql);
 
 
 if(count($_FILES['file_logo_img']['name']) > 0){
-    $path = $_FILES['ajax.save_general_tab.php']['name'];
+    $path = $_FILES['file_logo_img']['name'];
     $ext = pathinfo($path, PATHINFO_EXTENSION);
     $imgPath = '../../media/logo/logo.'.$ext;
     if(move_uploaded_file($_FILES['file_logo_img']['tmp_name'], $imgPath)){
