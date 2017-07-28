@@ -60,6 +60,45 @@
             <?php
             $cnt++;
             endforeach;
+            ?>
+                <div class="row curator">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label><b><u>คนที่ <span class="run_no">1</span></u> :</b> ชื่อ</label>
+                            <input type="text" name="curator_name" placeholder="ชื่อ" class="form-control"
+                                   value=""/>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>นามสกุล</label>
+                            <input type="text" name="curator_surname" placeholder="นามสกุล" class="form-control"
+                                   value=""/>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>เบอร์ติดต่อ</label>
+                            <input type="text" name="curator_tel" placeholder="เบอร์ติดต่อ" class="form-control"
+                                   value=""/>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label>ความสัมพันธ์</label>
+                            <input type="text" name="curator_relation" placeholder="ความสัมพันธ์" class="form-control"
+                                   value=""/>
+                        </div>
+                    </div>
+                    <div class="col-md-1 console">
+                        <?php if($cnt > 1) : ?>
+                            <i class="fa fa-2x fa-minus-square delObject" style="margin-top: 30px; cursor: pointer;"></i>
+                        <?php else : ?>
+                            <i class="fa fa-2x fa-plus-square newObject" style="margin-top: 30px; cursor: pointer;"></i>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            <?php
             endif;
             ?>
 

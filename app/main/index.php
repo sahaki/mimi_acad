@@ -40,18 +40,18 @@ foreach ($resulte as $index => $value){
         <!-- begin container-fluid -->
         <div class="container-fluid">
             <!-- begin mobile sidebar expand / collapse button -->
-            <div class="header">
-                <a href="index.html" class="navbar-brand">
-                    <img src="<?php echo $_SESSION['core_config']['logo_path']?>?date=<?php echo date('Y-m-d')?>" width="32" style="float:left; margin-right: 10px;">
-                    <?php echo $_SESSION['core_config']['company_name']?></a>
-                <button type="button" class="navbar-toggle" data-click="sidebar-toggled">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
+            <div class="header col-md-5 col-sm-6 col-xs-8" style="padding-bottom: 12px;">
+                <a href="index.html" class="navbar-brand" style="margin-right: 0; padding: 8px">
+                    <img src="<?php echo $_SESSION['core_config']['logo_path']?>?date=<?php echo date('Y-m-d')?>" width="32" style="float:left; margin-right: 10px;"></a>
+                <h3 style="padding: 0; margin: 10px 0 0 0;"><?php echo $_SESSION['core_config']['system_name']?></h3>
+                <small><?php echo $_SESSION['core_config']['company_name']?></small>
             </div>
             <!-- end mobile sidebar expand / collapse button -->
-
+            <button type="button" class="navbar-toggle" data-click="sidebar-toggled">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
             <!-- begin header navigation right -->
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown navbar-user">

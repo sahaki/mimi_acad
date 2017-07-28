@@ -1,5 +1,8 @@
 <?php
 // ข้อมูลบุคคล
+$dropTable = "DROP TABLE IF EXISTS `general_infomation`;";
+$mysqli->ServiceQuery($dropTable);
+
 $crateTable = "CREATE TABLE IF NOT EXISTS `general_infomation` (
   `general_id` int(13) NOT NULL AUTO_INCREMENT COMMENT 'รหัสบุคคล',
   `register_date` date DEFAULT NULL COMMENT 'วันที่ลงทะเบียน',
@@ -20,6 +23,7 @@ $crateTable = "CREATE TABLE IF NOT EXISTS `general_infomation` (
   `congenital_disease` varchar(50) DEFAULT NULL COMMENT 'โรคประจำตัว',
   `food_allergy` varchar(50) DEFAULT NULL COMMENT 'แพ้อาหาร',
   `img_path` varchar(50) DEFAULT NULL COMMENT 'path รูป',
+  `club_id` varchar(50) DEFAULT NULL COMMENT 'รหัส club',
   PRIMARY KEY (`general_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='ข้อมูลบุคคล ทั่วไป' ";
 $mysqli->ServiceQuery($crateTable);
@@ -37,6 +41,9 @@ $createTrigger = "CREATE TRIGGER `on_general_delete` BEFORE DELETE ON `general_i
     DELETE FROM general_curator WHERE general_id = OLD.general_id;
 END";
 $mysqli->ServiceQuery($createTrigger);
+
+$dropTable = "DROP TABLE IF EXISTS `general_address`;";
+$mysqli->ServiceQuery($dropTable);
 
 $crateTable = "CREATE TABLE IF NOT EXISTS `general_address` (
   `general_id` int(11) NOT NULL COMMENT 'รหัสบุคลล',
@@ -58,6 +65,9 @@ if($result->num_rows > 0){
     echo "==== Create Table general_address Complete ====<br>";
 }
 
+$dropTable = "DROP TABLE IF EXISTS `general_curator`;";
+$mysqli->ServiceQuery($dropTable);
+
 $crateTable = "CREATE TABLE IF NOT EXISTS `general_curator` (
   `curator_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ผู้ปกครอง',
   `general_id` int(11) DEFAULT NULL COMMENT 'รหัสบุคคล',
@@ -75,6 +85,9 @@ $result = $mysqli->ServiceQuery("SHOW TABLES LIKE 'general_curator'");
 if($result->num_rows > 0){
     echo "==== Create Table general_curator Complete ====<br>";
 }
+
+$dropTable = "DROP TABLE IF EXISTS `general_football`;";
+$mysqli->ServiceQuery($dropTable);
 
 $crateTable = "CREATE TABLE IF NOT EXISTS `general_football` (
   `general_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสบุคคล',

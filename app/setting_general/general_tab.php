@@ -43,6 +43,9 @@
                                value="<?php echo $_SESSION['core_config']['weight_unit']?>">
                     </div>
                 </div>
+
+                <input type="hidden" id="club_id" name="club_id"
+                       value="<?php echo $_SESSION['user_login']['club_id']?>">
                 <label class="control-label col-md-3 col-sm-3"></label>
                 <div class="col-md-6 col-sm-6">
                     <input type="button" id="save_data" class="btn btn-success" value="บันทึกข้อมูล">

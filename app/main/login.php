@@ -32,9 +32,9 @@ include_once('include_php.php');
         <!-- begin brand -->
         <div class="login-header">
             <div class="brand">
-                <img src="<?php echo $_SESSION['core_config']['logo_path']?>" width="50" style="float: left; margin-right: 10px;">
-                <h4><?php echo $_SESSION['core_config']['system_name']?></h4>
-                <small><?php echo $_SESSION['core_config']['company_name']?></small>
+                <img src="../../media/logo/league.png" width="50" style="float: left; margin-right: 10px;">
+                <h4>ระบบบริหารจัดการข้อมูลบุคคล</h4>
+                <small>Version 1.0.1</small>
             </div>
             <div class="icon">
                 <i class="fa fa-sign-in"></i>

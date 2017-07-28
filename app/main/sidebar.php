@@ -30,6 +30,8 @@
                     <li class="<?php echo $active?>"><a href="?page=setting_general"><i class="fa fa-cubes"></i> ข้อมูลทั่วไปของระบบ</a></li>
 	                <?php $active = ($_GET['page'] == 'setting_admin') ? "active" : ""; ?>
                     <li class="<?php echo $active?>"><a href="?page=setting_admin"><i class="fa fa-user"></i> ผู้ดูแลลระบบ</a></li>
+                    <?php $active = ($_GET['page'] == 'setting_club') ? "active" : ""; ?>
+                    <li class="<?php echo $active?>"><a href="?page=setting_club"><i class="fa fa-user"></i> ข้อมูล Club</a></li>
 	                <?php $active = ($_GET['page'] == 'setting_position') ? "active" : ""; ?>
                     <li class="<?php echo $active?>"><a href="?page=setting_position"><i class="fa fa-trophy"></i> ตำแหน่งในสนาม</a></li>
                 </ul>

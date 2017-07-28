@@ -1,15 +1,14 @@
 <?php
 $sql ="SELECT
-t1.admin_id,
-t1.username,
-t1.name_th,
-t1.surname_th,
-t1.job_position,
-t1.date_create,
-t2.club_name_th
+t1.club_id,
+t1.club_name_th,
+t1.club_name_en,
+t1.club_name_short,
+t1.club_stadium_name,
+t1.club_stadium_value,
+t1.club_history
 FROM
-config_admin_user AS t1
-LEFT JOIN config_club AS t2 ON t1.club_id = t2.club_id";
+config_club AS t1";
 
 $result = $mysqli->ServiceQuery($sql);
 ?>
@@ -26,18 +25,16 @@ $result = $mysqli->ServiceQuery($sql);
                        data-toggle="modal" data-target="#myModal" data-id="">
                         <i class="fa fa-plus" style="margin-top: 3px;"></i></a>
                 </div>
-                <h4 class="panel-title">ข้อมูลผู้ดูแลระบบ</h4>
+                <h4 class="panel-title">ข้อมูล Football Club</h4>
             </div>
             <div class="panel-body">
                 <table id="data-table" class="table table-striped table-bordered nowrap" width="100%">
                     <thead>
                     <tr>
                         <td width="5%">ลำดับ</td>
-                        <td>ชื่อผู้ใช้งาน</td>
-                        <td>ชื่อ - สกุล</td>
-                        <td>ตำแหน่ง</td>
-                        <td>club</td>
-                        <td>วันที่สร้าง</td>
+                        <td>ชื่อ club</td>
+                        <td>ชื่อสนาม</td>
+                        <td width="15%">ความจุ</td>
                         <td width="10%">รายละเอียด</td>
                     </tr>
                     </thead>
@@ -45,19 +42,16 @@ $result = $mysqli->ServiceQuery($sql);
                     <?PHP
                     $cnt = 1;
                     foreach ($result as $key => $val):
-                        $clubName = ($val['club_name_th'] != '') ? $val['club_name_th'] : 'ไม่ระบุ';
                     ?>
                     <tr>
                         <td class="text-center"><?php echo $cnt?></td>
-                        <td><?php echo $val['username']?></td>
-                        <td><?php echo $val['name_th']." ".$val['surname_th']?></td>
-                        <td><?php echo $val['job_position']?></td>
-                        <td><?php echo $clubName?></td>
-                        <td class="text-center"><?php echo $val['date_create']?></td>
+                        <td><?php echo $val['club_name_th']?></td>
+                        <td><?php echo $val['club_stadium_name']?></td>
+                        <td class="text-right"><?php echo $val['club_stadium_value']?></td>
                         <td class="text-center">
                             <a href="javascript:;" class="btn btn-sm btn-icon btn-circle btn-warning"
                                data-toggle="modal" data-target="#myModal"
-                               data-id="<?php echo $val['admin_id']?>">
+                               data-id="<?php echo $val['club_id']?>">
                                 <i class="fa fa-folder-open" style="margin-left: 3px;"></i></a>
                         </td>
                     </tr>
@@ -79,70 +73,64 @@ $result = $mysqli->ServiceQuery($sql);
                         data-dismiss="modal" style="float: right;">
                     <i class="fa fa-times"></i>
                 </button>
-                <h4 class="modal-title">จัดการข้อมูลผู้ดูแลระบบ</h4>
+                <h4 class="modal-title">จัดการข้อมูล Football Club</h4>
             </div>
             <div class="modal-body">
+                <form class="form-horizontal form-bordered" id="club_setting" data-parsley-validate="true" name="demo-form" novalidate="">
                 <div class="form-horizontal">
                     <div class="form-group">
                         <div class="row" style="padding: 15px 15px 0 15px;">
-                            <div class="col-md-6 col-sm-6">
-                                <label>ชื่อ</label>
-                                <input class="form-control" type="text" id="name_th" name="name_th"
-                                       placeholder="ชื่อ" value="">
+                            <div class="col-md-4 col-md-4" style="text-align: center;">
+                            <?php
+                            $img_path = (file_exists($general['img_path'])) ? $general['img_path'] : "../../media/person_register/blank.png";
+                            ?>
+                            <img src="<?php echo $img_path?>?date=<?php echo date('Y-m-d')?>" width="180" style="cursor: pointer;" id="logo_img"><br>
+                            <div style="margin-top:5px;">คลิกที่รูปเพื่ออัพโหลดรูปใหม่</div>
+                            <input type="file" name="file_logo_img" id="file_logo_img" style="display: none;">
                             </div>
-                            <div class="col-md-6 col-sm-6">
-                                <label>นามสกุล</label>
-                                <input class="form-control" type="text" id="surname_th" name="surname_th"
-                                       placeholder="นามสกุล" value="">
+                            <div class="col-md-8 col-md-8">
+                                <div class="col-md-12 col-sm-12" style="padding-right: 0;">
+                                    <label>ชื่อคลับภาษาไทย</label>
+                                    <input class="form-control" type="text" id="name_th" name="name_th"
+                                           placeholder="ชื่อคลับภาษาไทย" value="">
+                                </div>
+                                <div class="col-md-12 col-sm-12" style="margin-top: 15px; padding-right: 0;">
+                                    <label>ชื่อคลับภาษาอังกฤษ</label>
+                                    <input class="form-control" type="text" id="name_en" name="name_en"
+                                           placeholder="ชื่อคลับภาษาอังกฤษ" value="">
+                                </div>
+                                <div class="col-md-12 col-sm-12" style="margin-top: 15px; padding-right: 0;">
+                                    <label>ชื่อย่อ</label>
+                                    <input class="form-control" type="text" id="name_short" name="name_short"
+                                           placeholder="ชื่อย่อ" value="">
+                                </div>
                             </div>
-                        </div>
-                        <div class="row" style="padding: 15px 15px 0 15px;">
-                            <div class="col-md-12 col-sm-12">
-                                <label>ตำแหน่ง</label>
-                                <input class="form-control" type="text" id="job_position" name="job_position"
-                                       placeholder="ตำแหน่ง" value="">
-                            </div>
-                        </div>
 
-                        <?php if($_SESSION['user_login']['admin_type'] == 'admin') : ?>
-                        <div class="row" style="padding: 15px 15px 0 15px;">
-                            <div class="col-md-6 col-sm-12">
-                                <label>ประเภทผู้ใช้งาน</label>
-                                <select class="form-control" id="admin_type" name="admin_type">
-                                    <option value="admin">admin</option>
-                                    <option value="club">club</option>
-                                </select>
-                            </div>
                         </div>
-                        <?php endif; ?>
-
                         <div class="row" style="padding: 15px 15px 0 15px;">
-                            <div class="col-md-12 col-sm-12">
-                                <label>Username</label>
-                                <input class="form-control" type="text" id="username" name="username"
-                                       placeholder="Username" value="">
+                            <div class="col-md-7 col-sm-7">
+                                <label>ชื่อสนามเหย้า</label>
+                                <input class="form-control" type="text" id="club_stadium_name" name="club_stadium_name"
+                                       placeholder="ชื่อสนามเหย้า" value="">
+                            </div>
+                            <div class="col-md-5 col-sm-5">
+                                <label>ความจุคนในสนาม</label>
+                                <input class="form-control" type="text" id="club_stadium_value" name="club_stadium_value"
+                                       placeholder="ความจุคนในสนาม" value="">
                             </div>
                         </div>
                         <div class="row" style="padding: 15px 15px 0 15px;">
                             <div class="col-md-12 col-sm-12">
-                                <label>Password</label>
-                                <input class="form-control" type="password" id="password" name="password"
-                                       placeholder="Password" value="">
+                                <label>ประเวัติความเป็นมาของสโมสร</label>
+                                <textarea class="form-control" style="height: 150px;" name="club_history" id="club_history"></textarea>
                             </div>
                         </div>
-                        <div class="row" style="padding: 15px 15px 0 15px;">
-                            <div class="col-md-12 col-sm-12">
-                                <label>Confirm Password</label>
-                                <input class="form-control" type="password" id="confirm_password" name="confirm_password"
-                                       placeholder="Confirm Password" value="">
-                            </div>
-                        </div>
-
                     </div>
                 </div>
+                </form>
             </div>
             <div class="modal-footer">
-                <input type="hidden" id="admin_id" value="">
+                <input type="hidden" id="club_id" value="">
                 <a href="javascript:;" class="btn btn-sm btn-success" id="save_data">บันทึกข้อมูล</a>
                 <a href="javascript:;" class="btn btn-sm btn-danger" id="del_data">ลบข้อมูล</a>
             </div>
@@ -162,35 +150,54 @@ $result = $mysqli->ServiceQuery($sql);
     $(document).ready(function() {
         TableManageResponsive.init();
 
+        $('#logo_img').on('click',function(){
+            $('#file_logo_img').click();
+        });
+
+        $("#file_logo_img").change(function(){
+
+            var file = this.files[0];
+            var fileType = file["type"];
+            var ValidImageTypes = ["image/gif", "image/jpeg", "image/png"];
+
+            if ($.inArray(fileType, ValidImageTypes) < 0) {
+                swal("", "ระบบไม่รองรับ ไฟล์ "+fileType, "error");
+                $("#file_logo_img").val('');
+            }else{
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#logo_img').attr('src', e.target.result);
+                };
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
+
         $('[data-toggle="modal"]').on('click',
             function(e) {
                 if($(this).attr('data-id') == ''){
-                    $('#admin_id').val('');
-                    $('#username').val('');
-                    $('#admin_type').val('');
+                    $('#club_id').val('');
                     $('#name_th').val('');
-                    $('#surname_th').val('');
-                    $('#job_position').val('');
-                    $('#password').val('');
-                    $('#confirm_password').val();
+                    $('#name_en').val('');
+                    $('#name_short').val('');
+                    $('#club_stadium_name').val('');
+                    $('#club_stadium_value').val('');
+                    $('#club_history').val();
                 }else{
                     $.ajax({
                         dataType: "json",
                         type: 'POST',
-                        url: '../setting_admin/ajax.get_user_data.php',
+                        url: '../setting_club/ajax.get_club_data.php',
                         data: {
-                            'admin_id': $(this).attr('data-id')
+                            'club_id': $(this).attr('data-id')
                         },
                         success: function (data) {
-
-                            $('#admin_id').val(data.admin_id);
-                            $('#username').val(data.username);
-                            $('#admin_type').val(data.admin_type);
-                            $('#name_th').val(data.name_th);
-                            $('#surname_th').val(data.surname_th);
-                            $('#job_position').val(data.job_position);
-                            $('#password').val('');
-                            $('#confirm_password').val('');
+                            $('#club_id').val(data.club_id);
+                            $('#name_th').val(data.club_name_th);
+                            $('#name_en').val(data.club_name_en);
+                            $('#name_short').val(data.club_name_short);
+                            $('#club_stadium_name').val(data.club_stadium_name);
+                            $('#club_stadium_value').val(data.club_stadium_value);
+                            $('#club_history').val(data.club_history);
                         }
                     });
                 }
@@ -201,29 +208,25 @@ $result = $mysqli->ServiceQuery($sql);
             function(){
                 $.ajax({
                     type: 'POST',
-                    url: '../setting_admin/ajax.save_admin.php',
-                    data: {
-                        'admin_id': $('#admin_id').val(),
-                        'username': $('#username').val(),
-                        'password': $('#password').val(),
-                        'admin_type': $('#admin_type').val(),
-                        'name_th': $('#name_th').val(),
-                        'surname_th': $('#surname_th').val(),
-                        'job_position': $('#job_position').val(),
-                        'action_type' : 'modify'
-                    },
+                    async: false,
+                    url: '../setting_club/ajax.save_club.php',
+                    data: new FormData($("#club_setting")[0]),
                     success: function (data) {
+
                         swal({
                                 title: "",
                                 text: "บันทึกข้อมุลเรียบร้อย",
                                 type: "success",
                                 confirmButtonText: "ตกลง",
-                                closeOnConfirm: true
+                                closeOnConfirm: false
                             },
                             function(){
                                 window.location = '';
                             });
-                    }
+                    },
+                    cache: false,
+                    processData: false,
+                    contentType: false
                 });
             }
         );
@@ -245,9 +248,9 @@ $result = $mysqli->ServiceQuery($sql);
                         if (isConfirm) {
                             $.ajax({
                                 type: 'POST',
-                                url: '../setting_admin/ajax.save_admin.php',
+                                url: '../setting_club/ajax.save_club.php',
                                 data: {
-                                    'admin_id': $('#admin_id').val(),
+                                    'club_id': $('#club_id').val(),
                                     'action_type' : 'delete'
                                 },
                                 success: function (data) {

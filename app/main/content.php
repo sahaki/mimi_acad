@@ -11,6 +11,8 @@ elseif($_GET['page'] == 'setting_general') :
     include_once('../setting_general/form.php');
 elseif($_GET['page'] == 'setting_admin') :
 	include_once( '../setting_admin/dashboard.php' );
+elseif($_GET['page'] == 'setting_club') :
+    include_once( '../setting_club/dashboard.php' );
 elseif($_GET['page'] == 'setting_position') :
 	include_once( '../setting_position/dashboard.php' );
 else: ?>

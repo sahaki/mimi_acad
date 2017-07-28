@@ -39,7 +39,8 @@ education_class = '{$_POST[education_class]}',
 school_name = '{$_POST[school_name]}',
 favorite_sport = '{$_POST[favorite_sport]}',
 congenital_disease = '{$_POST[congenital_disease]}',
-food_allergy = '{$_POST[food_allergy]}'";
+food_allergy = '{$_POST[food_allergy]}',
+club_id = '{$_POST[club_id]}'";
 
 $sql .= $sql_detail.$sql_where;
 $result = $mysqli->ServiceQuery($sql);
