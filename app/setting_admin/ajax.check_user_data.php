@@ -1,17 +1,11 @@
 <?php
+session_start();
 include_once ('../main/include_php.php');
 $sql = "SELECT
-t1.club_id,
-t1.club_name_th,
-t1.club_name_en,
-t1.club_name_short,
-t1.club_stadium_name,
-t1.club_stadium_value,
-t1.club_history,
-t1.club_logo_path
+t1.admin_id
 FROM
-config_club AS t1
-WHERE t1.club_id = '{$_POST[club_id]}' ";
+config_admin_user AS t1
+WHERE t1.username = '{$_POST[username]}' ";
 $result = $mysqli->ServiceQuery($sql);
 ?>
 <?php

@@ -82,7 +82,7 @@ $result = $mysqli->ServiceQuery($sql);
                         <div class="row" style="padding: 15px 15px 0 15px;">
                             <div class="col-md-4 col-md-4" style="text-align: center;">
                             <?php
-                            $img_path = (file_exists($general['img_path'])) ? $general['img_path'] : "../../media/person_register/blank.png";
+                            $img_path = "../../media/person_register/blank.png";
                             ?>
                             <img src="<?php echo $img_path?>?date=<?php echo date('Y-m-d')?>" width="180" style="cursor: pointer;" id="logo_img"><br>
                             <div style="margin-top:5px;">คลิกที่รูปเพื่ออัพโหลดรูปใหม่</div>
@@ -127,10 +127,10 @@ $result = $mysqli->ServiceQuery($sql);
                         </div>
                     </div>
                 </div>
+                <input type="hidden" id="club_id" name="club_id" value="">
                 </form>
             </div>
             <div class="modal-footer">
-                <input type="hidden" id="club_id" value="">
                 <a href="javascript:;" class="btn btn-sm btn-success" id="save_data">บันทึกข้อมูล</a>
                 <a href="javascript:;" class="btn btn-sm btn-danger" id="del_data">ลบข้อมูล</a>
             </div>
@@ -182,6 +182,7 @@ $result = $mysqli->ServiceQuery($sql);
                     $('#club_stadium_name').val('');
                     $('#club_stadium_value').val('');
                     $('#club_history').val();
+                    $('#logo_img').attr('src','<?php echo $img_path?>');
                 }else{
                     $.ajax({
                         dataType: "json",
@@ -198,6 +199,11 @@ $result = $mysqli->ServiceQuery($sql);
                             $('#club_stadium_name').val(data.club_stadium_name);
                             $('#club_stadium_value').val(data.club_stadium_value);
                             $('#club_history').val(data.club_history);
+                            if($.trim(data.club_logo_path)){
+                                $('#logo_img').attr('src',data.club_logo_path);
+                            }else{
+                                $('#logo_img').attr('src','<?php echo $img_path?>');
+                            }
                         }
                     });
                 }
@@ -251,6 +257,7 @@ $result = $mysqli->ServiceQuery($sql);
                                 url: '../setting_club/ajax.save_club.php',
                                 data: {
                                     'club_id': $('#club_id').val(),
+                                    'logo_path' : $('#logo_img').attr('src'),
                                     'action_type' : 'delete'
                                 },
                                 success: function (data) {
