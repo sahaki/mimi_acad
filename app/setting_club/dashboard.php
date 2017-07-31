@@ -1,4 +1,7 @@
 <?php
+$whereClubId = ($_SESSION['user_login']['admin_type'] == 'club') ?
+	"AND t1.club_id = '{$_SESSION['user_login']['club_id']}' " : "";
+
 $sql ="SELECT
 t1.club_id,
 t1.club_name_th,
@@ -8,7 +11,8 @@ t1.club_stadium_name,
 t1.club_stadium_value,
 t1.club_history
 FROM
-config_club AS t1";
+config_club AS t1
+WHERE 1=1 {$whereClubId}";
 
 $result = $mysqli->ServiceQuery($sql);
 ?>

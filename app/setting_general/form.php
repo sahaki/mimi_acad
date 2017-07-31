@@ -10,7 +10,13 @@
 <div id="content" class="content">
     <div class="row">
         <div class="col-md-12 ui-sortable">
-            <?php include "general_tab.php";?>
+            <?php
+            if($_SESSION['user_login']['admin_type'] == 'club'){
+	            include "club_tab.php";
+            }else{
+	            include "general_tab.php";
+            }
+            ?>
         </div>
 
 </div>
