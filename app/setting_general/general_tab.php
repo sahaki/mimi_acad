@@ -25,8 +25,15 @@
                     <div style="margin-top:5px;">คลิกที่รูปเพื่ออัพโหลดรูปใหม่</div>
                     <input type="file" name="file_logo_img" id="file_logo_img" style="display: none;">
                 </div>
+
+                <input type="hidden" id="club_id" name="club_id"
+                       value="<?php echo $_SESSION['user_login']['club_id']?>">
+                <label class="control-label col-md-3 col-sm-3"></label>
+                <div class="col-md-6 col-sm-6">
+                    <input type="button" id="save_data" class="btn btn-success" value="บันทึกข้อมูล">
+                </div>
             </div>
-            <div class="form-group" style="margin-top: 10px;">
+            <div class="form-group" style="margin-top: 10px; display: none;">
                 <legend>ฟอร์มบันทึกข้อมูล</legend>
                 <label class="control-label col-md-3 col-sm-3">ส่วนสูง :</label>
                 <div class="col-md-8 col-sm-8">
@@ -42,13 +49,6 @@
                         <input class="form-control" type="text" id="weight_unit" name="weight_unit" placeholder="น้ำหนัก"
                                value="<?php echo $_SESSION['core_config']['weight_unit']?>">
                     </div>
-                </div>
-
-                <input type="hidden" id="club_id" name="club_id"
-                       value="<?php echo $_SESSION['user_login']['club_id']?>">
-                <label class="control-label col-md-3 col-sm-3"></label>
-                <div class="col-md-6 col-sm-6">
-                    <input type="button" id="save_data" class="btn btn-success" value="บันทึกข้อมูล">
                 </div>
             </div>
         </form>

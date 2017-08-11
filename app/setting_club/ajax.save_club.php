@@ -12,7 +12,7 @@ if($_POST['action_type'] == 'delete'){
 	$sql = "UPDATE config_club SET 
 	club_name_th ='{$_POST['name_th']}',
 	club_name_en ='{$_POST['name_en']}',
-	club_name_short ='{$_POST['club_name_short']}',
+	club_name_short ='{$_POST['name_short']}',
 	club_stadium_name ='{$_POST['club_stadium_name']}',
 	club_stadium_value ='{$_POST['club_stadium_value']}',
 	club_history ='{$_POST['club_history']}'
@@ -27,6 +27,7 @@ if($_POST['action_type'] == 'delete'){
 	club_history ='{$_POST['club_history']}' ";
 }
 $result = $mysqli->ServiceQuery($sql);
+
 
 if($_POST['club_id'] == ''){
 	echo $clubId = $mysqli->connect->insert_id;
@@ -85,4 +86,15 @@ if($clubId != ''){
 		config_value = '{$imgPath}'";
 		$mysqli->ServiceQuery($sql);
 	}
+}else{
+
+	$sql = "UPDATE config_core SET
+	config_value = '{$_POST['name_th']}'
+	WHERE club_id = '{$clubId}' AND config_var ='company_name'";
+	$mysqli->ServiceQuery($sql);
+
+	$sql = "UPDATE config_core SET
+	config_value = '{$imgPath}'
+	WHERE club_id = '{$clubId}' AND config_var ='logo_path'";
+	$mysqli->ServiceQuery($sql);
 }

@@ -1,7 +1,10 @@
 <?php
-/*echo "<pre>";
-print_r($_SESSION);
-echo "</pre>";*/
+if($_GET['show_ss'] == 'on'){
+	echo "<pre>";
+	print_r($_SESSION);
+	echo "</pre>";
+}
+
 if(count($_SESSION['user_login']) < 1) :
 ?>
     <META HTTP-EQUIV="Refresh" CONTENT="0;URL=login.php">

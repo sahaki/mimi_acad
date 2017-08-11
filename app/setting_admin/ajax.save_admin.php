@@ -14,7 +14,7 @@ if($_POST['action_type'] == 'delete'){
     $sql = "UPDATE config_admin_user SET 
 	username ='{$_POST['username']}',
 	{$password}
-	admin_type = '{$admin_type}}',
+	admin_type = '{$admin_type}',
 	club_id = '{$club_id}',
 	name_th ='{$_POST['name_th']}',
 	surname_th ='{$_POST['surname_th']}',
@@ -35,6 +35,8 @@ if($_POST['action_type'] == 'delete'){
 	job_position ='{$_POST['job_position']}',
 	date_create = '".date('Y-m-d')."' ";
 }
+
+echo $sql;
 $result = $mysqli->ServiceQuery($sql);
 
 if($_POST['admin_id'] == ''){

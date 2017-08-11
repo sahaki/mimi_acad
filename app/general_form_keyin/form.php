@@ -29,7 +29,7 @@
                            data-click="panel-collapse"><i class="fa fa-minus"></i></a>-->
                         <?php if($_GET['general_id'] != '') : ?>
                         <a href="javascript:;" class="btn btn-sm btn-icon btn-circle btn-danger"
-                           onclick="delThisdata('<?php $_GET['general_id']?>')"><i class="fa fa-times"></i></a>
+                           onclick="delThisdata('<?php echo $_GET['general_id']?>')"><i class="fa fa-times"></i></a>
                         <?php endif; ?>
                     </div>
                     <h4 class="panel-title">จัดการข้อมูลผู้เล่น</h4>
@@ -138,6 +138,32 @@
                                                     });
                                             })
                                         });
+
+                                        function delThisdata(general_id){
+                                            swal({
+                                                    title: "คำเตือน",
+                                                    text: "คุณต้องการลบข้อมูลนี้ออกจากระบบหรือไม่?",
+                                                    type: "warning",
+                                                    showCancelButton: true,
+                                                    confirmButtonColor: "#DD6B55",
+                                                    confirmButtonText: "ยืนยัน",
+                                                    cancelButtonText: "ยกเลิก",
+                                                    closeOnConfirm: false
+                                                },
+                                                function(){
+                                                    $.ajax({
+                                                        type: 'POST',
+                                                        async: false,
+                                                        url: '../general_form_keyin/ajax.delete_general.php',
+                                                        data: {'general_id':general_id},
+                                                        success: function () {
+                                                            window.location = '?page=general_dashboard';
+                                                        }
+                                                    });
+
+
+                                                });
+                                        }
                                     </script>
                                 </div>
                             </div><!-- /#progress-wizard -->

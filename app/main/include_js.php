@@ -6,6 +6,7 @@
 <script src="../assets/plugins/bootstrap/js/bootstrap.min.js"></script>
 <script src="../assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 <script src="../assets/plugins/jquery-cookie/jquery.cookie.js"></script>
+<script src="../../common/checkIdcard.js"></script>
 <!-- ================== END BASE JS ================== -->
 
 <!-- ================== BEGIN PAGE LEVEL JS ================== -->

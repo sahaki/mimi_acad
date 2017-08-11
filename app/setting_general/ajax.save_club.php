@@ -2,7 +2,7 @@
 include_once ('../main/include_php.php');
 
 if($_POST['club_id'] != '' && $_POST['club_id'] != '0'){
-	$sql = "UPDATE config_club SET 
+	$sql1 = "UPDATE config_club SET 
 	club_name_th ='{$_POST['name_th']}',
 	club_name_en ='{$_POST['name_en']}',
 	club_name_short ='{$_POST['club_name_short']}',
@@ -12,7 +12,7 @@ if($_POST['club_id'] != '' && $_POST['club_id'] != '0'){
 	club_logo_path = '{$_POST['club_logo_path']}'
 	WHERE club_id ='{$_POST['club_id']}'";
 }
-$result = $mysqli->ServiceQuery($sql);
+$result = $mysqli->ServiceQuery($sql1);
 
 if($_POST['club_id'] == ''){
 	echo $clubId = $mysqli->connect->insert_id;
