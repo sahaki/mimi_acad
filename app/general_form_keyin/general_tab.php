@@ -19,13 +19,15 @@
         t1.favorite_sport,
         t1.congenital_disease,
         t1.food_allergy,
-        t1.img_path
+        t1.img_path,
+        t1.club_id
         FROM
         general_infomation AS t1 WHERE general_id = '{$_GET[general_id]}'";
         $result = $mysqli->ServiceQuery($sql);
         foreach ($result as $index => $value){
             $general = $value;
         }
+
         if($general['register_date'] != '' && $general['register_date'] != '0000-00-00'){
 	        $arr_date = explode('-',$general['register_date']);
 	        $register_date = $arr_date[2].'/'.$arr_date[1].'/'.$arr_date[0];
@@ -41,13 +43,14 @@
         }
 
         $img_path = (file_exists($general['img_path'])) ? $general['img_path'] : "../../media/person_register/blank.png";
+
         ?>
         <form id="form_general_tab" method="post">
 		<legend class="pull-left width-full form-legend" style="margin-bottom: 10px;">ข้อมูลทั่วไป</legend>
 		<!-- begin row -->
 		<div class="row">
 			<div class="col-md-4" style="text-align: center">
-				<img src="<?php echo $img_path?>?date=<?php echo date('Y-m-d')?>" width="180" style="cursor: pointer;" id="person_img"><br>
+				<img src="<?php echo $img_path?>?date=<?php echo date('Y-m-d')?>" height="180" style="cursor: pointer;" id="person_img"><br>
                 <div style="margin-top:5px;">คลิกที่รูปเพื่ออัพโหลดรูปใหม่</div>
                 <input type="file" name="file_person_img" id="file_person_img" style="display: none;">
 			</div>
@@ -55,11 +58,14 @@
 				<div class="form-group">
 					<label>วันที่สมัคร</label>
                     <input class="form-control register_date" id="register_date" name="register_date" placeholder="วัน/เดือน/ปี"
-                           tabindex="1" value="<?php echo $register_date;?>">
+                           tabindex="1" value="<?php echo $register_date;?>" data-provide="datepicker" data-date-language="th-th">
 
-                    <label style="margin-top: 15px;">เลขประจำตัวประชาชน</label>
-                    <input type="text" name="idcard" id="idcard" placeholder="เลขประจำตัวประชาชน" class="form-control"
-                           tabindex="3" value="<?php echo $general['idcard']?>"/>
+                    <label style="margin-top: 15px;">เลขประจำตัวประชาชน
+                        <font color="red">* <span id="war-idcard" style="font-size:9px; "></span></font>
+                    </label>
+                    <input type="number" name="idcard" id="idcard" placeholder="เลขประจำตัวประชาชน" class="form-control"
+                        tabindex="3" value="<?php echo $general['idcard']?>"
+                        onblur="checkIdcard(this.value)"/>
 
                     <label style="margin-top: 15px;">ชื่อ</label>
                     <input type="text" name="name_th" id="name_th" placeholder="ชื่อ" class="form-control"
@@ -69,7 +75,7 @@
             <div class="col-md-4">
                 <label>วัน เดือน ปี เกิด</label>
                 <input class="form-control birth_date" id="birth_date" name="birth_date" placeholder="วัน/เดือน/ปี"
-                       tabindex="2" value="<?php echo $birth_date;?>">
+                       tabindex="2" value="<?php echo $birth_date;?>" data-provide="datepicker" data-date-language="th-th">
 
                 <label style="margin-top: 15px;">ชื่อเล่น</label>
                 <input type="text" name="nickname_th" id="nickname_th" placeholder="ชื่อเล่น" class="form-control"
@@ -162,6 +168,37 @@
 				</div>
 			</div>
 		</div>
+
+        <?php if($_SESSION['user_login']['admin_type'] == 'admin'):
+	        $sql = "SELECT
+            t1.club_id,
+            t1.club_name_th
+            FROM
+            config_club AS t1
+            ORDER BY t1.club_name_short";
+	        $resultClub = $mysqli->ServiceQuery($sql);
+            ?>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>สังกัด</label>
+                        <select class="form-control" name="club_id" id="club_id">
+                            <option value="">ไม่ระบุ</option>
+                            <?php foreach($resultClub as $clubDetail) :
+                                $selected = ($clubDetail['club_id'] == $general['club_id']) ? "selected" : "";
+                                ?>
+                                <option value="<?php echo $clubDetail['club_id']?>" <?php echo $selected?>>
+                                    <?php echo $clubDetail['club_name_th']?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        <?php else : ?>
+            <input type="hidden" name="club_id" id="club_id" value="<?php echo $_SESSION['user_login']['club_id']?>">
+        <?php endif; ?>
+
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
@@ -191,7 +228,6 @@
         </div>
 		<!-- end row -->
         <input type="hidden" name="general_id" id="general_id" value="<?php echo $_GET['general_id']?>">
-        <input type="hidden" name="club_id" id="club_id" value="<?php echo $_SESSION['user_login']['club_id']?>">
 
         <div class="col-md-12" style="text-align: right; padding: 0;">
             <input type="button" id="next_tab2" class="btn btn-success" value="บันทึกข้อมูล >>" tabindex="18">
@@ -202,12 +238,14 @@
         $(document).ready(function(){
             var d = new Date();
             var toDay = d.getDate() + '/' + (d.getMonth() + 1) + '/' + (d.getFullYear() + 543);
-
+            
             $("#register_date").datepicker({
+                language:'th-th',
                 format: 'dd/mm/yyyy'
             });
 
             $("#birth_date").datepicker({
+                language:'th-th',
                 format: 'dd/mm/yyyy'
             });
 
@@ -235,23 +273,93 @@
 
             /* Verify form keyin and save*/
             $('#next_tab2').on('click',function(){
-                var formData = new FormData($('#form_general_tab')[0]);
-                console.log(formData);
-                $.ajax({
-                    type: 'POST',
-                    async: false,
-                    url: '../general_form_keyin/ajax.save_general_tab.php',
-                    data: new FormData($("#form_general_tab")[0]),
-                    success: function (data) {
-                        $('#general_id').val($.trim(data));
-                        $('.panel-tab').find('li.next').find('a').click();
-                    },
-                    cache: false,
-                    processData: false,
-                    contentType: false
-                });
+                var checkErr = 0;
+                if($.trim($('#idcard').val()) == ''){
+                    checkErr = 1;
+                    $('#war-idcard').text('กรุณาระบุเลขประจำตัวประชาชน');
+                    $('#idcard').addClass('parsley-error');
+                    setTimeout(function(){$("#idcard").focus();},0);
+                }else{
+                    $('#war-idcard').text('');
+                    $('#idcard').removeClass('parsley-error');
 
+                }
+
+                if(checkErr === 0){
+                    var formData = new FormData($('#form_general_tab')[0]);
+                    $.ajax({
+                        type: 'POST',
+                        async: false,
+                        url: '../general_form_keyin/ajax.save_general_tab.php',
+                        data: new FormData($("#form_general_tab")[0]),
+                        success: function (data) {
+                            $('#general_id').val($.trim(data));
+                            $('.panel-tab').find('li.next').find('a').click();
+                        },
+                        cache: false,
+                        processData: false,
+                        contentType: false
+                    });
+                }
             });
         });
+
+        function checkIdcard(id){
+            if($.trim(id) != ''){
+                var result = Script_checkID(id);
+                if(result === true){
+                    $.ajax({
+                        dataType: "json",
+                        type: 'POST',
+                        url: '../general_form_keyin/ajax.get_general.php',
+                        data: {
+                            'general_id': '<?php echo $_GET['general_id']?>',
+                            'idcard' : id
+                        },
+                        success: function (data) {
+                            var swalText = 'พบข้อมูลเลขประจำตัวประชาชน '+data.idcard+'\n';
+                            swalText = swalText+data.name_th+' '+data.surname_th+' ';
+                            if(data.club_name_th != null){
+                                swalText = swalText+'อยู่ภายใต้สังกัด '+data.club_name_th+'\n';
+                                swalText = swalText+'หากท่านมีความประสงค์จะตำเนินการโยกย้ายข้อมูลนักเตะ กรุณาติดต่อผู้ดูแลระบบเพื่อดำเนินการ\n';
+                                swal({
+                                    title: "คำเตือน",
+                                    text: swalText,
+                                    type: "warning",
+                                    showCancelButton: true,
+                                    confirmButtonText: "ยืนยัน"
+                                },
+                                function(){
+                                    $("#idcard").val('');
+                                    setTimeout(function(){$("#idcard").focus();},0);
+                                });
+                            }else{
+                                swalText = swalText+'\n'+'เป็นนักเตะไม่มีสังกัด ท่านต้องการเพิ่มข้อมูลนักเดะคนนี้หรือไม่?';
+                                swal({
+                                    title: "คำเตือน",
+                                    text: swalText,
+                                    type: "warning",
+                                    showCancelButton: true,
+                                    confirmButtonText: "ยืนยัน"
+                                },
+                                function(){
+                                    window.location = '?page=general_form_keyin&general_id='+data.general_id;
+                                });
+                            }
+                        }
+                    });
+                }else{
+                    swal({
+                        title: "คำเตือน",
+                        text: "รูปแบบเลขบัตรจำตัวประชาชนผิด",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonText: "ยืนยัน"
+                    });
+                    $('#idcard').val('');
+                    setTimeout(function(){$("#idcard").focus();},0);
+                }
+            }
+        }
     </script>
 </div>
