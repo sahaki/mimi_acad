@@ -1,4 +1,7 @@
 <?php
+$whereClubId = ($_SESSION['user_login']['admin_type'] == 'club') ?
+	"AND t1.club_id = '{$_SESSION['user_login']['club_id']}' " : "";
+
 $sql ="SELECT
 t1.admin_id,
 t1.username,
@@ -9,9 +12,17 @@ t1.date_create,
 t2.club_name_th
 FROM
 config_admin_user AS t1
-LEFT JOIN config_club AS t2 ON t1.club_id = t2.club_id";
-
+LEFT JOIN config_club AS t2 ON t1.club_id = t2.club_id
+WHERE 1=1 {$whereClubId}";
 $result = $mysqli->ServiceQuery($sql);
+
+$sql = "SELECT
+t1.club_id,
+t1.club_name_short
+FROM
+config_club AS t1
+ORDER BY t1.club_name_short";
+$clubData = $mysqli->ServiceQuery($sql);
 ?>
 <!-- ================== datatable ================== -->
 <link href="../assets/plugins/DataTables/css/data-table.css" rel="stylesheet" />
@@ -68,7 +79,6 @@ $result = $mysqli->ServiceQuery($sql);
         </div>
     </div>
 </div>
-
 <!-- Modal -->
 <div id="myModal" class="modal fade">
     <div class="modal-dialog">
@@ -82,7 +92,7 @@ $result = $mysqli->ServiceQuery($sql);
                 <h4 class="modal-title">จัดการข้อมูลผู้ดูแลระบบ</h4>
             </div>
             <div class="modal-body">
-                <div class="form-horizontal">
+                <div id="form_1" class="form-horizontal">
                     <div class="form-group">
                         <div class="row" style="padding: 15px 15px 0 15px;">
                             <div class="col-md-6 col-sm-6">
@@ -104,35 +114,49 @@ $result = $mysqli->ServiceQuery($sql);
                             </div>
                         </div>
 
-                        <?php if($_SESSION['user_login']['admin_type'] == 'admin') : ?>
+	                    <?php if($_SESSION['user_login']['admin_type'] == 'admin') : ?>
                         <div class="row" style="padding: 15px 15px 0 15px;">
+                            <div class="col-md-6 col-sm-12">
+                                <label>สังกัดสโมสร</label>
+                                <select class="form-control" id="club_id" name="club_id">
+                                    <option value="">ไม่ระบุ</option>
+                                    <?php foreach ( $clubData as $data ): ?>
+                                    <option value="<?php echo $data['club_id']?>"><?php echo $data['club_name_short']?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+
                             <div class="col-md-6 col-sm-12">
                                 <label>ประเภทผู้ใช้งาน</label>
                                 <select class="form-control" id="admin_type" name="admin_type">
-                                    <option value="admin">admin</option>
                                     <option value="club">club</option>
+                                    <option value="admin">admin</option>
                                 </select>
                             </div>
                         </div>
-                        <?php endif; ?>
+	                    <?php endif; ?>
 
                         <div class="row" style="padding: 15px 15px 0 15px;">
                             <div class="col-md-12 col-sm-12">
-                                <label>Username</label>
+                                <label>Username
+                                    <font color="red">* <span id="war-username"></span></font>
+                                </label>
                                 <input class="form-control" type="text" id="username" name="username"
                                        placeholder="Username" value="">
                             </div>
                         </div>
                         <div class="row" style="padding: 15px 15px 0 15px;">
                             <div class="col-md-12 col-sm-12">
-                                <label>Password</label>
+                                <label>Password <font color="red">*</font></label>
                                 <input class="form-control" type="password" id="password" name="password"
                                        placeholder="Password" value="">
                             </div>
                         </div>
                         <div class="row" style="padding: 15px 15px 0 15px;">
                             <div class="col-md-12 col-sm-12">
-                                <label>Confirm Password</label>
+                                <label>Confirm Password
+                                    <font color="red">* <span id="war-confirm-password"></span></font>
+                                </label>
                                 <input class="form-control" type="password" id="confirm_password" name="confirm_password"
                                        placeholder="Confirm Password" value="">
                             </div>
@@ -140,6 +164,7 @@ $result = $mysqli->ServiceQuery($sql);
 
                     </div>
                 </div>
+
             </div>
             <div class="modal-footer">
                 <input type="hidden" id="admin_id" value="">
@@ -159,14 +184,50 @@ $result = $mysqli->ServiceQuery($sql);
 <script src="../assets/js/table-manage-responsive.demo.min.js"></script>
 
 <script>
+    function checkKeyValue(){
+        var checkErr = 0;
+        /********* check blank value ********/
+        if($.trim($('#username').val()) === ''){
+            $('#username').addClass('parsley-error');
+            checkErr = 1;
+        }else{
+            $('#username').removeClass('parsley-error');
+        }
+
+        if($.trim($('#password').val()) === '' && $('#admin_id').val() == ''){
+            $('#password').addClass('parsley-error');
+            checkErr = 1;
+        }else{
+            $('#password').removeClass('parsley-error');
+        }
+
+        if($.trim($('#confirm_password').val()) === '' && $('#admin_id').val() == ''){
+            $('#confirm_password').addClass('parsley-error');
+            checkErr = 1;
+        }else{
+            $('#confirm_password').removeClass('parsley-error');
+        }
+
+        if($('#password').val() != $('#confirm_password').val()){
+            checkErr = 1;
+            $('#war-confirm-password').text('กรุณาระบุ Password ทั้ง 2 ครั้งให้ตรงกัน');
+            $('#confirm_password').addClass('parsley-error');
+        }else{
+            $('#war-confirm-password').text('');
+            $('#confirm_password').removeClass('parsley-error');
+        }
+
+        return checkErr;
+    }
+
     $(document).ready(function() {
         TableManageResponsive.init();
-
         $('[data-toggle="modal"]').on('click',
             function(e) {
                 if($(this).attr('data-id') == ''){
                     $('#admin_id').val('');
-                    $('#username').val('');
+                    $('#username').val('').removeAttr('readonly');
+                    $('#club_id').val('');
                     $('#admin_type').val('');
                     $('#name_th').val('');
                     $('#surname_th').val('');
@@ -184,7 +245,8 @@ $result = $mysqli->ServiceQuery($sql);
                         success: function (data) {
 
                             $('#admin_id').val(data.admin_id);
-                            $('#username').val(data.username);
+                            $('#username').val(data.username).attr('readonly','readonly');
+                            $('#club_id').val(data.club_id);
                             $('#admin_type').val(data.admin_type);
                             $('#name_th').val(data.name_th);
                             $('#surname_th').val(data.surname_th);
@@ -199,32 +261,56 @@ $result = $mysqli->ServiceQuery($sql);
 
         $('#save_data').on('click',
             function(){
-                $.ajax({
-                    type: 'POST',
-                    url: '../setting_admin/ajax.save_admin.php',
-                    data: {
-                        'admin_id': $('#admin_id').val(),
-                        'username': $('#username').val(),
-                        'password': $('#password').val(),
-                        'admin_type': $('#admin_type').val(),
-                        'name_th': $('#name_th').val(),
-                        'surname_th': $('#surname_th').val(),
-                        'job_position': $('#job_position').val(),
-                        'action_type' : 'modify'
-                    },
-                    success: function (data) {
-                        swal({
-                                title: "",
-                                text: "บันทึกข้อมุลเรียบร้อย",
-                                type: "success",
-                                confirmButtonText: "ตกลง",
-                                closeOnConfirm: true
-                            },
-                            function(){
-                                window.location = '';
-                            });
-                    }
-                });
+                checkErr = checkKeyValue();
+
+                if(checkErr == 1){
+                    return false;
+                }else{
+                    /********* check duplicate username ********/
+                    $.ajax({
+                        dataType: "json",
+                        type: 'POST',
+                        url: '../setting_admin/ajax.check_user_data.php',
+                        data: {
+                            'username': $('#username').val()
+                        },
+                        success: function (data) {
+                            if(data === null || $('#admin_id').val() != ''){
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '../setting_admin/ajax.save_admin.php',
+                                    data: {
+                                        'admin_id': $('#admin_id').val(),
+                                        'username': $('#username').val(),
+                                        'password': $('#password').val(),
+                                        'admin_type': $('#admin_type').val(),
+                                        'club_id': $('#club_id').val(),
+                                        'name_th': $('#name_th').val(),
+                                        'surname_th': $('#surname_th').val(),
+                                        'job_position': $('#job_position').val(),
+                                        'action_type' : 'modify'
+                                    },
+                                    success: function (data) {
+                                        swal({
+                                            title: "",
+                                            text: "บันทึกข้อมุลเรียบร้อย",
+                                            type: "success",
+                                            showConfirmButton: true
+                                        },
+                                        function(){
+                                            window.location = '';
+                                        });
+                                    }
+                                });
+                                $('#war-username').text('');
+                                $('#username').removeClass('parsley-error');
+                            }else{
+                                $('#war-username').text('Username ที่ท่านกำลังเพิ่มใหม่ ถูกใช้งานไปแล้ว');
+                                $('#username').addClass('parsley-error');
+                            }
+                        }
+                    });
+                }
             }
         );
 

@@ -22,7 +22,10 @@
             <?php $active = (preg_match('/general_/',$_GET['page'])) ? "active" : ""; ?>
             <li class="<?php echo $active?>"><a href="?page=general_dashboard"><i class="fa fa-users"></i> <span>ข้อมูลนักกีฬา</span></a></li>
 
-            <?php $active = (preg_match('/setting_/',$_GET['page'])) ? "active" : ""; ?>
+            <?php
+            $active = (preg_match('/setting_/',$_GET['page'])) ? "active" : "";
+            $displayNone = ($_SESSION['user_login']['admin_type'] == 'club') ? 'style="display:none"' : "";
+            ?>
             <li class="has-sub <?php echo $active?>">
                 <a href="javascript:;"><b class="caret pull-right"></b><i class="fa fa-gears"></i> <span>ตั้งค่า</span></a>
                 <ul class="sub-menu">
@@ -31,9 +34,9 @@
 	                <?php $active = ($_GET['page'] == 'setting_admin') ? "active" : ""; ?>
                     <li class="<?php echo $active?>"><a href="?page=setting_admin"><i class="fa fa-user"></i> ผู้ดูแลลระบบ</a></li>
                     <?php $active = ($_GET['page'] == 'setting_club') ? "active" : ""; ?>
-                    <li class="<?php echo $active?>"><a href="?page=setting_club"><i class="fa fa-user"></i> ข้อมูล Club</a></li>
-	                <?php $active = ($_GET['page'] == 'setting_position') ? "active" : ""; ?>
-                    <li class="<?php echo $active?>"><a href="?page=setting_position"><i class="fa fa-trophy"></i> ตำแหน่งในสนาม</a></li>
+                    <li class="<?php echo $active?>" <?php echo $displayNone?>><a href="?page=setting_club"><i class="fa fa-user"></i> ข้อมูล Club</a></li>
+	                <?php $active = ($_GET['page'] == 'setting_position') ? "active" : "";?>
+                    <li class="<?php echo $active?>" <?php echo $displayNone?>><a href="?page=setting_position"><i class="fa fa-trophy"></i> ตำแหน่งในสนาม</a></li>
                 </ul>
             </li>
 

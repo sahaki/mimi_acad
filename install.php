@@ -95,7 +95,7 @@ $result = $mysqli->ServiceQuery("SHOW TABLES LIKE 'config_admin_user'");
 
 if($result->num_rows > 0){
 	$textQuery = "REPLACE INTO `config_admin_user` VALUES 
-    ('1', 'admin_user', '16d7a4fca7442dda3ad93c9a726597e4', '0', 'ผู้ใช้งาน', 'เริ่มต้น', 'ผู้ดูแลระบบ', '2017-07-23')";
+    ('1', 'admin_user', '16d7a4fca7442dda3ad93c9a726597e4', '0', 'ผู้ใช้งาน', 'เริ่มต้น', 'ผู้ดูแลระบบ','admin', '2017-07-23')";
 	$mysqli->ServiceQuery($textQuery);
 	echo "==== Create Table config_admin_user Complete ====<br>";
 }

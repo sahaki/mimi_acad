@@ -34,6 +34,11 @@ function getFootballPostion($general_id){
     return $text;
 }
 
+/**************** ดึงข้อมูลรายคน ******************/
+
+$whereClubId = ($_SESSION['user_login']['admin_type'] == 'club') ?
+    "AND t1.club_id = '{$_SESSION['user_login']['club_id']}' " : "";
+
 $sql = "SELECT
 t1.general_id,
 t1.register_date,
@@ -55,9 +60,11 @@ t1.congenital_disease,
 t1.food_allergy,
 t1.img_path
 FROM
-general_infomation AS t1";
+general_infomation AS t1
+WHERE 1=1 $whereClubId";
 $result = $mysqli->ServiceQuery($sql);
 
+/**************** ดึงข้อมูลตำแหน่งการเล่น ******************/
 $sql = "SELECT
 t1.position_id,
 t1.position_label

@@ -1,4 +1,5 @@
 <?php
+session_start();
 include_once ('../main/include_php.php');
 $sql = "SELECT
 t1.admin_id,

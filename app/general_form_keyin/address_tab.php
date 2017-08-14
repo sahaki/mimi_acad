@@ -75,10 +75,14 @@
                 <div class="form-group">
                     <label>อำเภอ/เขต</label>
                     <?php
+                    $whereProvince = ($address['province_id'] != '') ?
+                        "WHERE t1.code LIKE '".substr($address['province_id'],0,2)."%'":
+                        "";
                     $sql = "SELECT
                     t1.`code`,
                     t1.name_th
                     FROM config_area_district AS t1
+                    {$whereProvince}
                     ORDER BY t1.name_th ASC";
                     $result = $mysqli->ServiceQuery($sql);
                     ?>

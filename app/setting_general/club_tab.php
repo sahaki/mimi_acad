@@ -1,3 +1,23 @@
+<?php
+$sql = "SELECT
+t1.club_id,
+t1.club_name_th,
+t1.club_name_en,
+t1.club_name_short,
+t1.club_stadium_name,
+t1.club_stadium_value,
+t1.club_history,
+t1.club_logo_path
+FROM
+config_club AS t1
+WHERE t1.club_id = '{$_SESSION['user_login']['club_id']}' ";
+$result = $mysqli->ServiceQuery($sql);
+?>
+<?php
+foreach ($result as $index => $value) :
+	$arr = $value;
+endforeach;
+?>
 <div class="panel panel-inverse" data-sortable-id="ui-modal-notification-1">
     <div class="panel-heading">
         <div class="panel-heading-btn">
@@ -14,11 +34,41 @@
                     <input class="form-control" type="text" id="system_name" name="system_name" placeholder="ชื่อระบบ"
                            value="<?php echo $_SESSION['core_config']['system_name']?>">
                 </div>
-                <label class="control-label col-md-3 col-sm-3">หน่วยงาน :</label>
+                <label class="control-label col-md-3 col-sm-3">ชื่อคลับภาษาไทย :</label>
                 <div class="col-md-8 col-sm-8">
                     <input class="form-control" type="text" id="company_name" name="company_name" placeholder="หน่วยงาน"
                            value="<?php echo $_SESSION['core_config']['company_name']?>">
                 </div>
+
+                <label class="control-label col-md-3 col-sm-3">ชื่อคลับภาษาอังกฤษ :</label>
+                <div class="col-md-8 col-sm-8">
+                <input class="form-control" type="text" id="name_en" name="name_en"
+                       placeholder="ชื่อคลับภาษาอังกฤษ" value="<?php echo $arr['club_name_en']?>">
+                </div>
+
+                <label class="control-label col-md-3 col-sm-3">ชื่อย่อ :</label>
+                <div class="col-md-8 col-sm-8">
+                    <input class="form-control" type="text" id="name_short" name="name_short"
+                           placeholder="ชื่อย่อ" value="<?php echo $arr['club_name_short']?>">
+                </div>
+
+                <label class="control-label col-md-3 col-sm-3">ชื่อสนามเหย้า :</label>
+                <div class="col-md-8 col-sm-8">
+                    <input class="form-control" type="text" id="club_stadium_name" name="club_stadium_name"
+                           placeholder="ชื่อสนามเหย้า" value="<?php echo $arr['club_stadium_name']?>">
+                </div>
+
+                <label class="control-label col-md-3 col-sm-3">ความจุคนในสนาม :</label>
+                <div class="col-md-8 col-sm-8">
+                    <input class="form-control" type="text" id="club_stadium_value" name="club_stadium_value"
+                           placeholder="ความจุคนในสนาม" value="<?php echo $arr['club_stadium_value']?>">
+                </div>
+
+                <label class="control-label col-md-3 col-sm-3">ความจุคนในสนาม :</label>
+                <div class="col-md-8 col-sm-8">
+                    <textarea class="form-control" style="height: 150px;" name="club_history" id="club_history"><?php echo $arr['club_history']?></textarea>
+                </div>
+
                 <label class="control-label col-md-3 col-sm-3">Logo :</label>
                 <div class="col-md-8 col-sm-8">
                     <img src="<?php echo $_SESSION['core_config']['logo_path']?>?date=<?php echo date('Y-m-d')?>" width="50" id="img_logo" style="cursor: pointer"><br>
@@ -79,6 +129,19 @@
                 contentType: false
             });
 
+            $.ajax({
+                type: 'POST',
+                url: '../setting_general/ajax.save_club.php',
+                data: {
+                    'club_id': $('#club_id').val(),
+                    'name_th': $('#company_name').val(),
+                    'name_en': $('#name_en').val(),
+                    'club_name_short': $('#name_short').val(),
+                    'club_stadium_name': $('#club_stadium_name').val(),
+                    'club_stadium_value': $('#club_stadium_value').val(),
+                    'club_history': $('#club_history').val()
+                }
+            });
         });
 
         $('#img_logo').on('click',function(){
