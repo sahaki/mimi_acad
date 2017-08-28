@@ -80,6 +80,15 @@
                                                     </div>
                                                 </a>
                                             </li>
+                                            <li>
+                                                <a href="#tab3-5" data-toggle="tab">
+                                                    <i class="fa fa-check-circle"></i>
+                                                    <div>
+                                                        <span class="text-strong">Step 5</span>
+                                                        <span>เอกสารแนบ</span>
+                                                    </div>
+                                                </a>
+                                            </li>
                                         </ul>
                                     </div><!-- /.panel-heading -->
                                     <!--/ End tabs heading -->
@@ -107,6 +116,9 @@
                                             </div>
                                             <div class="tab-pane fade inner-all" id="tab3-4">
 												<?php include( "curator_tab.php" ); ?>
+                                            </div>
+                                            <div class="tab-pane fade inner-all" id="tab3-5">
+	                                            <?php include( "attacth_tab.php" ); ?>
                                             </div>
                                         </div>
                                     </div><!-- /.panel-body -->

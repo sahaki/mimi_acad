@@ -104,3 +104,28 @@ $result = $mysqli->ServiceQuery("SHOW TABLES LIKE 'general_football'");
 if($result->num_rows > 0){
     echo "==== Create Table general_football Complete ====<br>";
 }
+
+############### สร้างตาราง general_attach  ###############
+$dropTable = "DROP TABLE IF EXISTS `general_attach`;";
+$mysqli->ServiceQuery($dropTable);
+
+$createTable = "CREATE TABLE IF NOT EXISTS `general_attach` (
+`attach_id`  int NOT NULL AUTO_INCREMENT COMMENT 'รหัสไฟล์แนบ' ,
+`general_id`  int NULL COMMENT 'รหัสบุคคล' ,
+`attach_value`  varchar(255) NULL COMMENT 'ค่า' ,
+`attach_status`  enum('0','1') NULL DEFAULT '1' COMMENT '0 คือลบออก' ,
+`createtime`  datetime NULL COMMENT 'วันที่สร้าง' ,
+`updatetime`  timestamp NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'วันที่อัพเดท' ,
+PRIMARY KEY (`attach_id`)
+)
+COMMENT='ไฟล์แนบ'";
+
+$mysqli->ServiceQuery($createTable);
+$result = $mysqli->ServiceQuery("SHOW TABLES LIKE 'general_attach'");
+if($result->num_rows > 0){
+	echo "==== Create Table general_attach Complete ====<br>";
+}
+
+
+
+;

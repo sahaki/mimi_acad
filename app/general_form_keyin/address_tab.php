@@ -147,7 +147,8 @@
 
             /****** เลือกจังหวัด *******/
             $('#province').on('change',function(){
-                $('#district').val('');
+                $('#district').empty().append('<option value="">เลือก</option>');
+                getAjaxDistrict();
                 $('#subdistrict').empty().append('<option value="">เลือก</option>');
                 $('#district option').each(function () {
                     if($('#province').val().substr(0,2) == $(this).val().substr(0,2)){
@@ -192,6 +193,23 @@
                 }
             });
         });
+
+        function getAjaxDistrict() {
+            $.ajax({
+                dataType: "json",
+                type: 'POST',
+                url: '../general_form_keyin/ajax.district.php',
+                data: {
+                    'id': $('#province').val()
+                },
+                success: function (data) {
+                    $.each( data, function( key, val ) {
+                        $('#district').append('<option value=' + key+ '>' + val + '</option>');
+                    });
+                    $('#district').change();
+                }
+            });
+        }
         
         function getAjaxSubDistrict() {
             $.ajax({

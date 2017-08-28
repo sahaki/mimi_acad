@@ -50,7 +50,7 @@
 		<!-- begin row -->
 		<div class="row">
 			<div class="col-md-4" style="text-align: center">
-				<img src="<?php echo $img_path?>?date=<?php echo date('Y-m-d')?>" height="180" style="cursor: pointer;" id="person_img"><br>
+				<img src="<?php echo $img_path?>?date=<?php echo date('Y-m-d-H-i-s')?>" height="180" style="cursor: pointer;" id="person_img"><br>
                 <div style="margin-top:5px;">คลิกที่รูปเพื่ออัพโหลดรูปใหม่</div>
                 <input type="file" name="file_person_img" id="file_person_img" style="display: none;">
 			</div>

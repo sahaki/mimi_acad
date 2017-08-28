@@ -8,11 +8,17 @@
     t1.curator_tel,
     t1.curator_relation
     FROM
-    general_curator AS t1 WHERE general_id = '{$_GET[general_id]}'";
+    general_curator AS t1 WHERE general_id = '{$_GET[general_id]}' 
+    AND t1.curator_name_th != ''";
     $result = $mysqli->ServiceQuery($sql);
 
     $cnt = 1;
     ?>
+    <style>
+        .delObject{
+            color:#d9534f;
+        }
+    </style>
     <fieldset>
         <div class="curator_contrainer">
             <legend class="pull-left width-full form-legend">ผู้ปกครอง</legend>
@@ -134,7 +140,7 @@
                         url: '../general_form_keyin/ajax.save_curator_tab.php',
                         data: {'sendData':sendData,'general_id':$('#general_id').val()},
                         success: function (data) {
-                            window.location = '?page=general_dashboard';
+                            $('.panel-tab').find('li.next').find('a').click();
                         }
                     });
                 }

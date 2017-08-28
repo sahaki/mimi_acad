@@ -61,9 +61,11 @@ foreach ($resulte as $index => $value){
                     </a>
                     <ul class="dropdown-menu animated fadeInLeft">
                         <li class="arrow"></li>
+                        <?php if($_SESSION['user_login']['lock_id'] != 'on'): ?>
                         <li><a href="?page=general_dashboard">ข้อมูลนักกีฬา</a></li>
                         <li><a href="?page=setting_general">ตั้งค่าระบบ</a></li>
                         <li class="divider"></li>
+                        <?php endif; ?>
                         <li><a href="login.php">ออกจากระบบ</a></li>
                     </ul>
                 </li>
@@ -75,7 +77,13 @@ foreach ($resulte as $index => $value){
     <!-- end #header -->
 
     <!-- begin #sidebar -->
-    <?php include_once('sidebar.php'); ?>
+    <?php
+    if($_SESSION['user_login']['lock_id'] != 'on'):
+        include_once('sidebar.php');
+    else:
+	    include_once('sidebar_child.php');
+    endif;
+    ?>
     <!-- end #sidebar -->
 
     <!-- begin #content -->
